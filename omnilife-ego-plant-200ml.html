@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Auriculares Inalámbricos | CaliValle</title>
+    <title>Auriculares Inalámbricos Premium | CaliValle</title>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -63,29 +63,6 @@
             height: 40px;
             width: auto;
             max-width: 100%;
-        }
-        
-        .cart-icon {
-            position: relative;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: white;
-        }
-        
-        .cart-count {
-            position: absolute;
-            top: -10px;
-            right: -10px;
-            background-color: var(--color-blanco);
-            color: var(--color-negro);
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.8rem;
-            font-weight: bold;
         }
         
         /* Main Content */
@@ -185,49 +162,76 @@
             margin-bottom: 0.5rem;
         }
         
-        .product-actions {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        .add-to-cart, .buy-now {
-            padding: 1rem 2rem;
+        /* Botón de WhatsApp */
+        .whatsapp-buy-button {
+            padding: 1.2rem 2rem;
+            background-color: var(--color-verde);
+            color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-family: 'Libre Baskerville', serif;
-            font-size: 1rem;
+            font-size: 1.2rem;
             transition: background-color 0.3s;
-            flex: 1;
             text-align: center;
             text-decoration: none;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.8rem;
+            margin: 2rem 0;
+            width: 100%;
         }
         
-        .add-to-cart {
-            background-color: var(--color-negro);
-            color: var(--color-blanco);
+        .whatsapp-buy-button:hover {
+            background-color: #128C7E;
         }
         
-        .add-to-cart:hover {
-            background-color: var(--color-gris-oscuro);
+        /* Estilos para videos */
+        .video-container {
+            margin: 2rem 0;
         }
         
-        .buy-now {
-            background-color: var(--color-gris-oscuro);
-            color: var(--color-blanco);
+        .video-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-gris-oscuro);
+            border-bottom: 2px solid var(--color-gris-medio);
+            padding-bottom: 0.5rem;
         }
         
-        .buy-now:hover {
-            background-color: var(--color-negro);
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        /* Cart Modal */
-        .cart-modal {
+        .video-wrapper.shorts {
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 177.78%; /* Relación 9:16 para vertical */
+        }
+        
+        .video-wrapper.normal {
+            padding-bottom: 56.25%; /* Relación 16:9 para horizontal */
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Modal para compra por WhatsApp */
+        .whatsapp-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -240,17 +244,17 @@
             align-items: center;
         }
         
-        .cart-content {
+        .whatsapp-content {
             background-color: var(--color-blanco);
             width: 90%;
-            max-width: 600px;
+            max-width: 500px;
             border-radius: 8px;
             padding: 2rem;
             max-height: 90vh;
             overflow-y: auto;
         }
         
-        .cart-header {
+        .whatsapp-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -259,72 +263,104 @@
             border-bottom: 1px solid var(--color-gris-medio);
         }
         
-        .close-cart {
+        .close-whatsapp {
             font-size: 1.5rem;
             cursor: pointer;
             background: none;
             border: none;
         }
         
-        .cart-items {
-            margin-bottom: 1.5rem;
-        }
-        
-        .cart-item {
+        .whatsapp-product {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
             border-bottom: 1px solid var(--color-gris-medio);
         }
         
-        .item-info {
+        .whatsapp-product img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 1rem;
+            border-radius: 4px;
+        }
+        
+        .whatsapp-info h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .whatsapp-info .product-price {
+            margin-bottom: 0;
+        }
+        
+        /* Shipping Options */
+        .shipping-options {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: var(--color-gris-claro);
+            border-radius: 8px;
+        }
+        
+        .shipping-options h3 {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+        
+        .shipping-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            border: 2px solid var(--color-gris-medio);
+            border-radius: 8px;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .shipping-option:hover {
+            border-color: var(--color-negro);
+        }
+        
+        .shipping-option.selected {
+            border-color: var(--color-negro);
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        .shipping-option:last-child {
+            margin-bottom: 0;
+        }
+        
+        .shipping-info {
+            display: flex;
+            flex-direction: column;
             flex-grow: 1;
         }
         
-        .item-title {
+        .shipping-name {
             font-weight: 700;
-            margin-bottom: 0.3rem;
-            font-size: 1rem;
-        }
-        
-        .item-price {
-            color: var(--color-gris-oscuro);
-            font-size: 0.9rem;
-        }
-        
-        .item-quantity {
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
         
-        .quantity-btn {
-            background: none;
-            border: 1px solid var(--color-gris-medio);
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .shipping-description {
+            font-size: 0.9rem;
+            color: var(--color-gris-oscuro);
+            margin-top: 0.3rem;
         }
         
-        .remove-item {
-            color: #ff0000;
-            cursor: pointer;
-            margin-left: 1rem;
-        }
-        
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            font-size: 1.2rem;
+        .shipping-price {
             font-weight: 700;
-            margin-bottom: 1.5rem;
-            padding-top: 1rem;
-            border-top: 2px solid var(--color-gris-medio);
+        }
+        
+        .shipping-free {
+            color: var(--color-verde);
+        }
+        
+        .shipping-radio {
+            margin-right: 0.8rem;
         }
         
         /* Customer Info Form */
@@ -350,7 +386,7 @@
             font-weight: 700;
         }
         
-        .form-group input {
+        .form-group input, .form-group select {
             width: 100%;
             padding: 0.8rem;
             border: 1px solid var(--color-gris-medio);
@@ -388,16 +424,7 @@
             background-color: #128C7E;
         }
         
-        .email-btn {
-            background-color: var(--color-rojo);
-            color: white;
-        }
-        
-        .email-btn:hover {
-            background-color: #c0392b;
-        }
-        
-        .whatsapp-btn:disabled, .email-btn:disabled {
+        .whatsapp-btn:disabled {
             background-color: #cccccc;
             cursor: not-allowed;
         }
@@ -410,173 +437,6 @@
         .continue-shopping:hover {
             background-color: var(--color-gris-oscuro);
             color: var(--color-blanco);
-        }
-        
-        /* Modal para compra directa */
-        .direct-purchase-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .direct-purchase-content {
-            background-color: var(--color-blanco);
-            width: 90%;
-            max-width: 500px;
-            border-radius: 8px;
-            padding: 2rem;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        .direct-purchase-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--color-gris-medio);
-        }
-        
-        .close-direct-purchase {
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        
-        .direct-purchase-product {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--color-gris-medio);
-        }
-        
-        .direct-purchase-product img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            margin-right: 1rem;
-            border-radius: 4px;
-        }
-        
-        .direct-purchase-info h3 {
-            margin-bottom: 0.5rem;
-        }
-        
-        .direct-purchase-info .product-price {
-            margin-bottom: 0;
-        }
-        
-        /* Modal de selección de cliente de correo */
-        .email-client-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1010;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .email-client-content {
-            background-color: var(--color-blanco);
-            width: 90%;
-            max-width: 400px;
-            border-radius: 8px;
-            padding: 2rem;
-        }
-        
-        .email-client-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--color-gris-medio);
-        }
-        
-        .close-email-client {
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-        }
-        
-        .email-client-options {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        
-        .email-client-btn {
-            padding: 1rem;
-            border: none;
-            border-radius: 4px;
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-        }
-        
-        .gmail-btn {
-            background-color: #DB4437;
-            color: white;
-        }
-        
-        .gmail-btn:hover {
-            background-color: #C1351D;
-        }
-        
-        .outlook-btn {
-            background-color: #0078D4;
-            color: white;
-        }
-        
-        .outlook-btn:hover {
-            background-color: #0063B1;
-        }
-        
-        .yahoo-btn {
-            background-color: #6001D2;
-            color: white;
-        }
-        
-        .yahoo-btn:hover {
-            background-color: #4E00B0;
-        }
-        
-        .zoho-btn {
-            background-color: #CB2027;
-            color: white;
-        }
-        
-        .zoho-btn:hover {
-            background-color: #A91B22;
-        }
-        
-        .other-btn {
-            background-color: var(--color-gris-oscuro);
-            color: white;
-        }
-        
-        .other-btn:hover {
-            background-color: var(--color-negro);
         }
         
         /* Footer */
@@ -599,11 +459,6 @@
         .footer-section {
             flex: 1;
             min-width: 250px;
-            display: none;
-        }
-        
-        .footer-section:nth-child(2) {
-            display: block;
         }
         
         .footer-section h3 {
@@ -622,13 +477,13 @@
             color: var(--color-blanco);
         }
         
-        .footer-social-icons {
+        .social-icons {
             display: flex;
             gap: 1rem;
             margin-top: 1rem;
         }
         
-        .footer-social-icons a {
+        .social-icons a {
             font-size: 1.5rem;
         }
         
@@ -660,11 +515,7 @@
                 font-size: 1.5rem;
             }
             
-            .product-actions {
-                flex-direction: column;
-            }
-            
-            .cart-content, .direct-purchase-content, .email-client-content {
+            .whatsapp-content {
                 width: 95%;
                 padding: 1rem;
             }
@@ -683,24 +534,14 @@
                 font-size: 1.3rem;
             }
             
-            .add-to-cart, .buy-now {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
+            .whatsapp-buy-button {
+                padding: 1rem 1.5rem;
+                font-size: 1.1rem;
             }
             
             .thumbnail {
                 width: 60px;
                 height: 60px;
-            }
-            
-            .cart-item {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-            }
-            
-            .item-quantity {
-                align-self: flex-end;
             }
         }
         
@@ -726,10 +567,6 @@
             <a href="catalogo.html" class="logo">
                 <img src="https://qrcontraentrega.com/wp-content/uploads/2025/09/IMG_0736.png" alt="Logo CaliValle" class="logo-img">
             </a>
-            <div class="cart-icon" id="cartIcon">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-count" id="cartCount">0</span>
-            </div>
         </div>
     </header>
 
@@ -737,25 +574,33 @@
     <div class="container">
         <!-- Breadcrumb -->
         <div class="breadcrumb">
-            <a href="catalogo.html">Catálogo</a> > <a href="catalogo.html?category=tecnologia">Tecnología</a> > Auriculares Inalámbricos
+            <a href="catalogo.html">Catálogo</a> > <a href="catalogo.html?category=tecnologia">Tecnología</a> > Auriculares Inalámbricos Premium
         </div>
         
         <!-- Product Detail -->
         <div class="product-detail">
             <div class="product-gallery">
                 <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                     alt="Auriculares Inalámbricos" class="main-image" id="mainImage">
+                     alt="Auriculares Inalámbricos Premium" class="main-image" id="mainImage">
                 <div class="thumbnail-container">
                     <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                         alt="Auriculares Inalámbricos - Vista 1" class="thumbnail active" data-image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80">
+                         alt="Auriculares Inalámbricos Premium - Vista 1" class="thumbnail active" data-image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80">
                     <img src="https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                         alt="Auriculares Inalámbricos - Vista 2" class="thumbnail" data-image="https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80">
+                         alt="Auriculares Inalámbricos Premium - Vista 2" class="thumbnail" data-image="https://images.unsplash.com/photo-1572536147248-ac59a8abfa4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80">
+                    <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
+                         alt="Auriculares Inalámbricos Premium - Vista 3" class="thumbnail" data-image="https://images.unsplash.com/photo-1583394838336-acd977736f90?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80">
                 </div>
             </div>
             
             <div class="product-info">
-                <h1 class="product-title">Auriculares Inalámbricos</h1>
-                <p class="product-price">$149.99</p>
+                <h1 class="product-title">Auriculares Inalámbricos Premium</h1>
+                <p class="product-price">$249.900</p>
+                
+                <!-- Botón de WhatsApp -->
+                <button class="whatsapp-buy-button" id="whatsappBuyButton">
+                    <i class="fab fa-whatsapp"></i> COMPRAR POR WHATSAPP
+                </button>
+                
                 <div class="product-description">
                     <p>Experimenta el sonido como nunca antes con nuestros auriculares inalámbricos de última generación. Con cancelación de ruido activa, podrás sumergirte completamente en tu música favorita sin distracciones del mundo exterior.</p>
                 </div>
@@ -763,136 +608,100 @@
                 <div class="product-features">
                     <h3>Características principales:</h3>
                     <ul>
-                        <li>Cancelación de ruido activa</li>
-                        <li>Hasta 20 horas de batería</li>
-                        <li>Conexión Bluetooth 5.0 estable</li>
-                        <li>Resistencia al agua IPX4</li>
-                        <li>Micrófono incorporado para llamadas claras</li>
-                        <li>Controles táctiles intuitivos</li>
+                        <li>Cancelación de ruido activa de última generación</li>
+                        <li>Hasta 30 horas de batería con carga rápida</li>
+                        <li>Conexión Bluetooth 5.2 estable y de baja latencia</li>
+                        <li>Resistencia al agua IPX5</li>
+                        <li>Micrófono incorporado con cancelación de ruido para llamadas claras</li>
+                        <li>Controles táctiles intuitivos y asistente de voz</li>
+                        <li>Sonido Hi-Fi con graves profundos y agudos cristalinos</li>
                     </ul>
                 </div>
                 
-                <div class="product-actions">
-                    <button class="add-to-cart" id="addToCart">
-                        <i class="fas fa-cart-plus"></i> Añadir al Carrito
-                    </button>
-                    <button class="buy-now" id="buyNow">
-                        <i class="fas fa-shopping-bag"></i> Comprar Ahora
-                    </button>
+                <!-- Videos de TikTok y YouTube -->
+                <div class="video-container">
+                    <div class="video-title">Video demostrativo en YouTube Shorts:</div>
+                    <div class="video-wrapper shorts">
+                        <iframe src="https://www.youtube.com/embed/hL2-t5baPSg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="video-title">Review completo en TikTok:</div>
+                    <div class="video-wrapper shorts">
+                        <iframe src="https://www.tiktok.com/embed/v2/7547918238538075448" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="video-title">Video tutorial completo:</div>
+                    <div class="video-wrapper normal">
+                        <iframe src="https://www.youtube.com/embed/kxj3ft_o-vs" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Cart Modal -->
-    <div class="cart-modal" id="cartModal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h2>Tu Carrito de Compras</h2>
-                <button class="close-cart" id="closeCart">&times;</button>
-            </div>
-            <div class="cart-items" id="cartItems">
-                <!-- Los items del carrito se cargarán dinámicamente -->
-            </div>
-            <div class="cart-total">
-                <span>Total:</span>
-                <span id="cartTotal">$0.00</span>
+    <!-- WhatsApp Purchase Modal -->
+    <div class="whatsapp-modal" id="whatsappModal">
+        <div class="whatsapp-content">
+            <div class="whatsapp-header">
+                <h2>Comprar por WhatsApp</h2>
+                <button class="close-whatsapp" id="closeWhatsapp">&times;</button>
             </div>
             
-            <!-- Customer Information Form -->
-            <div class="customer-info">
-                <h3>Información de Envío</h3>
-                <div class="form-group">
-                    <label for="customerName">Nombre Completo *</label>
-                    <input type="text" id="customerName" placeholder="Ingresa tu nombre completo" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerPhone">Teléfono *</label>
-                    <input type="tel" id="customerPhone" placeholder="Ingresa tu número de teléfono" required>
-                </div>
-                <div class="form-group">
-                    <label for="customerAddress">Dirección de Envío *</label>
-                    <input type="text" id="customerAddress" placeholder="Ingresa tu dirección completa" required>
-                </div>
-            </div>
-            
-            <div class="checkout-buttons">
-                <button class="checkout-btn whatsapp-btn" id="whatsappBtn" disabled>
-                    <i class="fab fa-whatsapp"></i> Comprar por WhatsApp
-                </button>
-                <button class="checkout-btn email-btn" id="emailBtn" disabled>
-                    <i class="fas fa-envelope"></i> Enviar por Correo
-                </button>
-                <button class="checkout-btn continue-shopping" id="continueShopping">Seguir comprando</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Direct Purchase Modal -->
-    <div class="direct-purchase-modal" id="directPurchaseModal">
-        <div class="direct-purchase-content">
-            <div class="direct-purchase-header">
-                <h2>Comprar Producto</h2>
-                <button class="close-direct-purchase" id="closeDirectPurchase">&times;</button>
-            </div>
-            
-            <div class="direct-purchase-product" id="directPurchaseProduct">
+            <div class="whatsapp-product" id="whatsappProduct">
                 <!-- Información del producto se cargará dinámicamente -->
             </div>
             
+            <!-- Shipping Options -->
+            <div class="shipping-options">
+                <h3>Opciones de Envío</h3>
+                <div class="shipping-option" data-shipping="0">
+                    <input type="radio" id="whatsapp-shipping-priority" name="whatsapp-shipping" class="shipping-radio" checked>
+                    <div class="shipping-info">
+                        <span class="shipping-name">
+                            <i class="fas fa-shipping-fast"></i> Envío Prioritario
+                        </span>
+                        <span class="shipping-description">Tu pedido sale en menos de 24 horas hábiles</span>
+                    </div>
+                    <span class="shipping-price shipping-free">Gratis</span>
+                </div>
+                <div class="shipping-option" data-shipping="6000">
+                    <input type="radio" id="whatsapp-shipping-standard" name="whatsapp-shipping" class="shipping-radio">
+                    <div class="shipping-info">
+                        <span class="shipping-name">
+                            <i class="fas fa-truck"></i> Envío Estándar
+                        </span>
+                        <span class="shipping-description">Entrega en 3-5 días hábiles</span>
+                    </div>
+                    <span class="shipping-price">$6.000,00</span>
+                </div>
+            </div>
+            
             <!-- Customer Information Form -->
             <div class="customer-info">
                 <h3>Información de Envío</h3>
                 <div class="form-group">
-                    <label for="directCustomerName">Nombre Completo *</label>
-                    <input type="text" id="directCustomerName" placeholder="Ingresa tu nombre completo" required>
+                    <label for="whatsappCustomerName">Nombre Completo *</label>
+                    <input type="text" id="whatsappCustomerName" placeholder="Ingresa tu nombre completo" required>
                 </div>
                 <div class="form-group">
-                    <label for="directCustomerPhone">Teléfono *</label>
-                    <input type="tel" id="directCustomerPhone" placeholder="Ingresa tu número de teléfono" required>
+                    <label for="whatsappCustomerPhone">Teléfono *</label>
+                    <input type="tel" id="whatsappCustomerPhone" placeholder="Ingresa tu número de teléfono" required>
                 </div>
                 <div class="form-group">
-                    <label for="directCustomerAddress">Dirección de Envío *</label>
-                    <input type="text" id="directCustomerAddress" placeholder="Ingresa tu dirección completa" required>
+                    <label for="whatsappCustomerAddress">Dirección de Envío *</label>
+                    <input type="text" id="whatsappCustomerAddress" placeholder="Ingresa tu dirección completa" required>
+                </div>
+                <div class="form-group">
+                    <label for="whatsappCustomerCity">Ciudad *</label>
+                    <input type="text" id="whatsappCustomerCity" placeholder="Ingresa tu ciudad" required>
                 </div>
             </div>
             
             <div class="checkout-buttons">
-                <button class="checkout-btn whatsapp-btn" id="directWhatsappBtn" disabled>
-                    <i class="fab fa-whatsapp"></i> Comprar por WhatsApp
+                <button class="checkout-btn whatsapp-btn" id="sendWhatsappBtn" disabled>
+                    <i class="fab fa-whatsapp"></i> Enviar pedido por WhatsApp
                 </button>
-                <button class="checkout-btn email-btn" id="directEmailBtn" disabled>
-                    <i class="fas fa-envelope"></i> Enviar por Correo
-                </button>
-                <button class="checkout-btn continue-shopping" id="cancelDirectPurchase">Cancelar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Email Client Selection Modal -->
-    <div class="email-client-modal" id="emailClientModal">
-        <div class="email-client-content">
-            <div class="email-client-header">
-                <h2>Selecciona tu cliente de correo</h2>
-                <button class="close-email-client" id="closeEmailClient">&times;</button>
-            </div>
-            
-            <div class="email-client-options">
-                <button class="email-client-btn gmail-btn" id="gmailBtn">
-                    <i class="fab fa-google"></i> Gmail
-                </button>
-                <button class="email-client-btn outlook-btn" id="outlookBtn">
-                    <i class="fab fa-microsoft"></i> Outlook
-                </button>
-                <button class="email-client-btn yahoo-btn" id="yahooBtn">
-                    <i class="fab fa-yahoo"></i> Yahoo Mail
-                </button>
-                <button class="email-client-btn zoho-btn" id="zohoBtn">
-                    <i class="fas fa-envelope"></i> Zoho Mail
-                </button>
-                <button class="email-client-btn other-btn" id="otherEmailBtn">
-                    <i class="fas fa-envelope"></i> Otro cliente de correo
-                </button>
+                <button class="checkout-btn continue-shopping" id="cancelWhatsapp">Cancelar</button>
             </div>
         </div>
     </div>
@@ -902,82 +711,61 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Acerca de Nosotros</h3>
-                <p>Calivalle ofrece productos de calidad con entrega contra reembolso en todo el país.</p>
+                <p>Somos Contraentrega. La revolución en logística y comercio electrónico de Colombia. Conectamos vendedores y compradores con una red de entrega confiable y el sistema de pago contraentrega más seguro.</p>
             </div>
             <div class="footer-section">
                 <h3>Contacto</h3>
-                <p><i class="fas fa-phone"></i> +57 123 456 7890</p>
-                <p><i class="fas fa-envelope"></i> info@calivalle.qrcontraentrega.com</p>
-                <p><i class="fas fa-map-marker-alt"></i> Calle 10 # 20-30, Cali, Colombia</p>
+                <p><i class="fas fa-phone"></i> +57 3215343562</p>
+                <p><i class="fas fa-envelope"></i> calivalle@qrcontraentrega.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Carrera 16 # 9 - 44, Cali, Colombia</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/14T4jNLh1Dw/?mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
+                    <a href="https://instagram.com/calivalle_qrcontraentrega"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/573215343562"><i class="fab fa-whatsapp"></i></a>
+                </div>
             </div>
             <div class="footer-section">
                 <h3>Enlaces Rápidos</h3>
-                <a href="catalogo.html">Inicio</a>
-                <a href="catalogo.html">Productos</a>
-                <a href="#">Términos y Condiciones</a>
-                <a href="#">Política de Privacidad</a>
+                <a href="https://qrcontraentrega.com/afiliacion-colombia">Afiliarse</a>
+                <a href="https://qrcontraentrega.com/solicitar-envio-colombia">Logística</a>
+                <a href="https://qrcontraentrega.com/terminos-y-condiciones-colombia">Términos y Condiciones</a>
+                <a href="https://qrcontraentrega.com/calivalle-mapa">Mapa</a>
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2023 CaliValle QR Contra Entrega. Todos los derechos reservados.</p>
+            <p>&copy; Contraentrega. Todos los derechos reservados.</p>
         </div>
     </footer>
 
     <script>
         // Variables globales
-        let cart = [];
-        let currentDirectProduct = null;
-        let currentEmailData = {
-            subject: "",
-            body: ""
-        };
+        let selectedShipping = 0; // Costo de envío seleccionado
         
         // Elementos del DOM
-        const cartIcon = document.getElementById('cartIcon');
-        const cartCount = document.getElementById('cartCount');
-        const cartModal = document.getElementById('cartModal');
-        const closeCart = document.getElementById('closeCart');
-        const cartItems = document.getElementById('cartItems');
-        const cartTotal = document.getElementById('cartTotal');
-        const whatsappBtn = document.getElementById('whatsappBtn');
-        const emailBtn = document.getElementById('emailBtn');
-        const continueShopping = document.getElementById('continueShopping');
-        const customerName = document.getElementById('customerName');
-        const customerPhone = document.getElementById('customerPhone');
-        const customerAddress = document.getElementById('customerAddress');
-        
-        // Elementos para compra directa
-        const directPurchaseModal = document.getElementById('directPurchaseModal');
-        const directPurchaseProduct = document.getElementById('directPurchaseProduct');
-        const closeDirectPurchase = document.getElementById('closeDirectPurchase');
-        const directCustomerName = document.getElementById('directCustomerName');
-        const directCustomerPhone = document.getElementById('directCustomerPhone');
-        const directCustomerAddress = document.getElementById('directCustomerAddress');
-        const directWhatsappBtn = document.getElementById('directWhatsappBtn');
-        const directEmailBtn = document.getElementById('directEmailBtn');
-        const cancelDirectPurchase = document.getElementById('cancelDirectPurchase');
-        
-        // Elementos para selección de cliente de correo
-        const emailClientModal = document.getElementById('emailClientModal');
-        const closeEmailClient = document.getElementById('closeEmailClient');
-        const gmailBtn = document.getElementById('gmailBtn');
-        const outlookBtn = document.getElementById('outlookBtn');
-        const yahooBtn = document.getElementById('yahooBtn');
-        const zohoBtn = document.getElementById('zohoBtn');
-        const otherEmailBtn = document.getElementById('otherEmailBtn');
-        
-        // Botones de producto
-        const addToCartButton = document.getElementById('addToCart');
-        const buyNowButton = document.getElementById('buyNow');
+        const whatsappModal = document.getElementById('whatsappModal');
+        const whatsappProduct = document.getElementById('whatsappProduct');
+        const closeWhatsapp = document.getElementById('closeWhatsapp');
+        const whatsappCustomerName = document.getElementById('whatsappCustomerName');
+        const whatsappCustomerPhone = document.getElementById('whatsappCustomerPhone');
+        const whatsappCustomerAddress = document.getElementById('whatsappCustomerAddress');
+        const whatsappCustomerCity = document.getElementById('whatsappCustomerCity');
+        const sendWhatsappBtn = document.getElementById('sendWhatsappBtn');
+        const cancelWhatsapp = document.getElementById('cancelWhatsapp');
+        const whatsappBuyButton = document.getElementById('whatsappBuyButton');
         
         // Información del producto actual
         const currentProduct = {
             id: 1,
-            title: "Auriculares Inalámbricos",
-            price: 149.99,
-            description: "Auriculares con cancelación de ruido y 20h de batería",
+            title: "Auriculares Inalámbricos Premium",
+            price: 249900,
+            description: "Auriculares con cancelación de ruido activa y 30h de batería",
             image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
         };
+
+        // Función para formatear precios en formato COP
+        function formatPrice(price) {
+            return 'COP $' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
 
         // Funcionalidad para cambiar imágenes al hacer clic en miniaturas
         const thumbnails = document.querySelectorAll('.thumbnail');
@@ -995,125 +783,27 @@
                 mainImage.src = thumbnail.getAttribute('data-image');
             });
         });
-        
-        // Agregar producto al carrito
-        function addToCart(productId, productTitle, productPrice, productImage) {
-            const existingItem = cart.find(item => item.id === productId);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({
-                    id: productId,
-                    title: productTitle,
-                    price: productPrice,
-                    quantity: 1,
-                    image: productImage
-                });
-            }
-            
-            updateCart();
-            showNotification(`${productTitle} agregado al carrito`);
-        }
 
-        // Eliminar producto del carrito
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-        }
-
-        // Actualizar cantidad de producto en el carrito
-        function updateQuantity(productId, change) {
-            const item = cart.find(item => item.id === productId);
-            
-            if (item) {
-                item.quantity += change;
-                
-                if (item.quantity <= 0) {
-                    removeFromCart(productId);
-                } else {
-                    updateCart();
+        // Actualizar opciones de envío visualmente
+        function updateShippingOptions() {
+            document.querySelectorAll('.shipping-option').forEach(option => {
+                option.classList.remove('selected');
+                const radio = option.querySelector('.shipping-radio');
+                if (radio.checked) {
+                    option.classList.add('selected');
+                    selectedShipping = parseInt(option.getAttribute('data-shipping'));
                 }
-            }
+            });
         }
 
-        // Actualizar visualización del carrito
-        function updateCart() {
-            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        // Validar si se puede habilitar el botón de WhatsApp
+        function validateWhatsappButton() {
+            const hasName = whatsappCustomerName.value.trim() !== '';
+            const hasPhone = whatsappCustomerPhone.value.trim() !== '';
+            const hasAddress = whatsappCustomerAddress.value.trim() !== '';
+            const hasCity = whatsappCustomerCity.value.trim() !== '';
             
-            cartItems.innerHTML = '';
-            let total = 0;
-            
-            cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                total += itemTotal;
-                
-                const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item';
-                cartItem.innerHTML = `
-                    <img src="${item.image}" alt="${item.title}" width="50">
-                    <div class="item-info">
-                        <h4 class="item-title">${item.title}</h4>
-                        <p class="item-price">$${item.price.toFixed(2)} c/u</p>
-                    </div>
-                    <div class="item-quantity">
-                        <button class="quantity-btn minus" data-id="${item.id}">-</button>
-                        <span>${item.quantity}</span>
-                        <button class="quantity-btn plus" data-id="${item.id}">+</button>
-                        <span class="remove-item" data-id="${item.id}"><i class="fas fa-trash"></i></span>
-                    </div>
-                    <div class="item-total">$${itemTotal.toFixed(2)}</div>
-                `;
-                cartItems.appendChild(cartItem);
-            });
-            
-            cartTotal.textContent = `$${total.toFixed(2)}`;
-            
-            // Agregar event listeners a los botones de cantidad y eliminar
-            document.querySelectorAll('.quantity-btn.minus').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = parseInt(e.target.closest('.quantity-btn').getAttribute('data-id'));
-                    updateQuantity(id, -1);
-                });
-            });
-            
-            document.querySelectorAll('.quantity-btn.plus').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = parseInt(e.target.closest('.quantity-btn').getAttribute('data-id'));
-                    updateQuantity(id, 1);
-                });
-            });
-            
-            document.querySelectorAll('.remove-item').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const id = parseInt(e.target.closest('.remove-item').getAttribute('data-id'));
-                    removeFromCart(id);
-                });
-            });
-            
-            // Habilitar o deshabilitar el botón de WhatsApp según si hay productos y datos completos
-            validateCheckoutButton();
-        }
-
-        // Validar si se puede habilitar los botones de envío
-        function validateCheckoutButton() {
-            const hasItems = cart.length > 0;
-            const hasName = customerName.value.trim() !== '';
-            const hasPhone = customerPhone.value.trim() !== '';
-            const hasAddress = customerAddress.value.trim() !== '';
-            
-            whatsappBtn.disabled = !(hasItems && hasName && hasPhone && hasAddress);
-            emailBtn.disabled = !(hasItems && hasName && hasPhone && hasAddress);
-        }
-
-        // Validar si se puede habilitar los botones de envío para compra directa
-        function validateDirectCheckoutButton() {
-            const hasName = directCustomerName.value.trim() !== '';
-            const hasPhone = directCustomerPhone.value.trim() !== '';
-            const hasAddress = directCustomerAddress.value.trim() !== '';
-            
-            directWhatsappBtn.disabled = !(hasName && hasPhone && hasAddress);
-            directEmailBtn.disabled = !(hasName && hasPhone && hasAddress);
+            sendWhatsappBtn.disabled = !(hasName && hasPhone && hasAddress && hasCity);
         }
 
         // Mostrar notificación
@@ -1146,51 +836,35 @@
             const direccion = contactoSection.querySelector('p:nth-child(4)').textContent;
             
             return {
-                nombre: "CaliValle Store",
+                nombre: "@hermanosdreams",
                 correo: correo,
                 direccion: direccion,
                 telefono: telefono
             };
         }
 
-        // Generar mensaje de WhatsApp para el carrito
+        // Generar mensaje de WhatsApp para compra
         function generateWhatsAppMessage() {
-            const remitente = getRemitenteInfo();
-            
-            let message = "¡Hola! Quiero realizar la siguiente compra:\n\n";
-            
-            cart.forEach(item => {
-                message += `- ${item.title} x${item.quantity}: $${(item.price * item.quantity).toFixed(2)}\n`;
-            });
-            
-            message += `\nTotal: $${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}`;
-            message += `\n\nMi información de envío es:\n`;
-            message += `Nombre: ${customerName.value}\n`;
-            message += `Teléfono: ${customerPhone.value}\n`;
-            message += `Dirección: ${customerAddress.value}`;
-            
-            // Añadir información del remitente
-            message += `\n\nInformación del remitente:\n`;
-            message += `Negocio: ${remitente.nombre}\n`;
-            message += `Correo: ${remitente.correo}\n`;
-            message += `Dirección: ${remitente.direccion}\n`;
-            message += `Teléfono: ${remitente.telefono}`;
-            
-            return encodeURIComponent(message);
-        }
-
-        // Generar mensaje de WhatsApp para compra directa
-        function generateDirectWhatsAppMessage() {
             const remitente = getRemitenteInfo();
             
             let message = "¡Hola! Quiero comprar el siguiente producto:\n\n";
             
-            message += `- ${currentDirectProduct.title}: $${currentDirectProduct.price.toFixed(2)}\n`;
-            message += `\nTotal: $${currentDirectProduct.price.toFixed(2)}`;
+            message += `- ${currentProduct.title}: ${formatPrice(currentProduct.price)}\n`;
+            
+            // Añadir costo de envío
+            if (selectedShipping > 0) {
+                message += `- Envío: ${formatPrice(selectedShipping)}\n`;
+            } else {
+                message += `- Envío: Gratis\n`;
+            }
+            
+            const total = currentProduct.price + selectedShipping;
+            message += `\nTotal: ${formatPrice(total)}`;
             message += `\n\nMi información de envío es:\n`;
-            message += `Nombre: ${directCustomerName.value}\n`;
-            message += `Teléfono: ${directCustomerPhone.value}\n`;
-            message += `Dirección: ${directCustomerAddress.value}`;
+            message += `Nombre: ${whatsappCustomerName.value}\n`;
+            message += `Teléfono: ${whatsappCustomerPhone.value}\n`;
+            message += `Dirección: ${whatsappCustomerAddress.value}\n`;
+            message += `Ciudad: ${whatsappCustomerCity.value}`;
             
             // Añadir información del remitente
             message += `\n\nInformación del remitente:\n`;
@@ -1202,225 +876,73 @@
             return encodeURIComponent(message);
         }
 
-        // Generar mensaje para correo electrónico
-        function generateEmailMessage(isDirect = false) {
-            const remitente = getRemitenteInfo();
-            
-            let message = "Solicitud de compra:\n\n";
-            
-            if (isDirect) {
-                message += `Producto: ${currentDirectProduct.title}\n`;
-                message += `Precio: $${currentDirectProduct.price.toFixed(2)}\n`;
-            } else {
-                message += "Productos en el carrito:\n";
-                cart.forEach(item => {
-                    message += `- ${item.title} x${item.quantity}: $${(item.price * item.quantity).toFixed(2)}\n`;
-                });
-                message += `\nTotal: $${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}`;
-            }
-            
-            message += `\nInformación del cliente:\n`;
-            message += `Nombre: ${isDirect ? directCustomerName.value : customerName.value}\n`;
-            message += `Teléfono: ${isDirect ? directCustomerPhone.value : customerPhone.value}\n`;
-            message += `Dirección: ${isDirect ? directCustomerAddress.value : customerAddress.value}`;
-            
-            message += `\n\nInformación del remitente:\n`;
-            message += `Negocio: ${remitente.nombre}\n`;
-            message += `Correo: ${remitente.correo}\n`;
-            message += `Dirección: ${remitente.direccion}\n`;
-            message += `Teléfono: ${remitente.telefono}`;
-            
-            return message;
-        }
-
-        // Abrir modal para compra directa
-        function openDirectPurchase(product) {
-            currentDirectProduct = product;
-            
+        // Abrir modal para compra por WhatsApp
+        function openWhatsappPurchase(product) {
             // Mostrar información del producto en el modal
-            directPurchaseProduct.innerHTML = `
+            whatsappProduct.innerHTML = `
                 <img src="${product.image}" alt="${product.title}">
-                <div class="direct-purchase-info">
+                <div class="whatsapp-info">
                     <h3>${product.title}</h3>
-                    <p class="product-price">$${product.price.toFixed(2)}</p>
+                    <p class="product-price">${formatPrice(product.price)}</p>
                 </div>
             `;
             
             // Limpiar formulario
-            directCustomerName.value = '';
-            directCustomerPhone.value = '';
-            directCustomerAddress.value = '';
-            directWhatsappBtn.disabled = true;
-            directEmailBtn.disabled = true;
+            whatsappCustomerName.value = '';
+            whatsappCustomerPhone.value = '';
+            whatsappCustomerAddress.value = '';
+            whatsappCustomerCity.value = '';
+            sendWhatsappBtn.disabled = true;
+            
+            // Resetear opción de envío
+            document.getElementById('whatsapp-shipping-priority').checked = true;
+            selectedShipping = 0;
+            updateShippingOptions();
             
             // Mostrar modal
-            directPurchaseModal.style.display = 'flex';
+            whatsappModal.style.display = 'flex';
         }
 
-        // Abrir modal de selección de cliente de correo
-        function openEmailClientModal(isDirect = false) {
-            // Preparar datos para el correo
-            const subject = "Solicitud de compra - CaliValle";
-            const body = generateEmailMessage(isDirect);
-            
-            currentEmailData = {
-                subject: subject,
-                body: encodeURIComponent(body)
-            };
-            
-            // Mostrar modal
-            emailClientModal.style.display = 'flex';
-        }
-
-        // Abrir cliente de correo específico
-        function openEmailClient(client) {
-            let mailtoUrl;
-            
-            switch(client) {
-                case 'gmail':
-                    mailtoUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=info@calivalle.qrcontraentrega.com&su=${currentEmailData.subject}&body=${currentEmailData.body}`;
-                    break;
-                case 'outlook':
-                    mailtoUrl = `https://outlook.live.com/owa/?path=/mail/action/compose&to=info@calivalle.qrcontraentrega.com&subject=${currentEmailData.subject}&body=${currentEmailData.body}`;
-                    break;
-                case 'yahoo':
-                    mailtoUrl = `https://compose.mail.yahoo.com/?to=info@calivalle.qrcontraentrega.com&subject=${currentEmailData.subject}&body=${currentEmailData.body}`;
-                    break;
-                case 'zoho':
-                    mailtoUrl = `https://mail.zoho.com/zm/#mail/compose?to=info@calivalle.qrcontraentrega.com&subject=${currentEmailData.subject}&body=${currentEmailData.body}`;
-                    break;
-                default:
-                    mailtoUrl = `mailto:info@calivalle.qrcontraentrega.com?subject=${currentEmailData.subject}&body=${currentEmailData.body}`;
-            }
-            
-            window.open(mailtoUrl, '_blank');
-            emailClientModal.style.display = 'none';
-        }
-
-        // Event Listeners
-        cartIcon.addEventListener('click', () => {
-            cartModal.style.display = 'flex';
+        // Event Listeners para WhatsApp
+        closeWhatsapp.addEventListener('click', () => {
+            whatsappModal.style.display = 'none';
         });
 
-        closeCart.addEventListener('click', () => {
-            cartModal.style.display = 'none';
+        cancelWhatsapp.addEventListener('click', () => {
+            whatsappModal.style.display = 'none';
         });
 
-        continueShopping.addEventListener('click', () => {
-            cartModal.style.display = 'none';
-        });
-
-        whatsappBtn.addEventListener('click', () => {
-            if (cart.length === 0) {
-                showNotification('El carrito está vacío');
-                return;
-            }
-            
+        sendWhatsappBtn.addEventListener('click', () => {
             const message = generateWhatsAppMessage();
-            window.open(`https://wa.me/573123456789?text=${message}`, '_blank');
+            window.open(`https://wa.me/573215343562?text=${message}`, '_blank');
         });
 
-        emailBtn.addEventListener('click', () => {
-            if (cart.length === 0) {
-                showNotification('El carrito está vacío');
-                return;
-            }
-            
-            openEmailClientModal(false);
+        // Botón principal de WhatsApp
+        whatsappBuyButton.addEventListener('click', () => {
+            openWhatsappPurchase(currentProduct);
         });
 
-        // Event Listeners para compra directa
-        closeDirectPurchase.addEventListener('click', () => {
-            directPurchaseModal.style.display = 'none';
+        // Event listeners para opciones de envío
+        document.querySelectorAll('.shipping-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                const radio = option.querySelector('.shipping-radio');
+                radio.checked = true;
+                updateShippingOptions();
+            });
         });
 
-        cancelDirectPurchase.addEventListener('click', () => {
-            directPurchaseModal.style.display = 'none';
-        });
-
-        directWhatsappBtn.addEventListener('click', () => {
-            if (!currentDirectProduct) {
-                showNotification('No hay producto seleccionado');
-                return;
-            }
-            
-            const message = generateDirectWhatsAppMessage();
-            window.open(`https://wa.me/573123456789?text=${message}`, '_blank');
-        });
-
-        directEmailBtn.addEventListener('click', () => {
-            if (!currentDirectProduct) {
-                showNotification('No hay producto seleccionado');
-                return;
-            }
-            
-            openEmailClientModal(true);
-        });
-
-        // Event Listeners para selección de cliente de correo
-        closeEmailClient.addEventListener('click', () => {
-            emailClientModal.style.display = 'none';
-        });
-
-        gmailBtn.addEventListener('click', () => {
-            openEmailClient('gmail');
-        });
-
-        outlookBtn.addEventListener('click', () => {
-            openEmailClient('outlook');
-        });
-
-        yahooBtn.addEventListener('click', () => {
-            openEmailClient('yahoo');
-        });
-
-        zohoBtn.addEventListener('click', () => {
-            openEmailClient('zoho');
-        });
-
-        otherEmailBtn.addEventListener('click', () => {
-            openEmailClient('other');
-        });
-
-        // Botones de producto
-        addToCartButton.addEventListener('click', () => {
-            addToCart(
-                currentProduct.id,
-                currentProduct.title,
-                currentProduct.price,
-                currentProduct.image
-            );
-        });
-
-        buyNowButton.addEventListener('click', () => {
-            openDirectPurchase(currentProduct);
-        });
-
-        // Validar formulario cuando cambian los campos
-        customerName.addEventListener('input', validateCheckoutButton);
-        customerPhone.addEventListener('input', validateCheckoutButton);
-        customerAddress.addEventListener('input', validateCheckoutButton);
-
-        // Validar formulario de compra directa cuando cambian los campos
-        directCustomerName.addEventListener('input', validateDirectCheckoutButton);
-        directCustomerPhone.addEventListener('input', validateDirectCheckoutButton);
-        directCustomerAddress.addEventListener('input', validateDirectCheckoutButton);
+        // Validar formulario de WhatsApp cuando cambian los campos
+        whatsappCustomerName.addEventListener('input', validateWhatsappButton);
+        whatsappCustomerPhone.addEventListener('input', validateWhatsappButton);
+        whatsappCustomerAddress.addEventListener('input', validateWhatsappButton);
+        whatsappCustomerCity.addEventListener('input', validateWhatsappButton);
 
         // Cerrar modal al hacer clic fuera de él
         window.addEventListener('click', (e) => {
-            if (e.target === cartModal) {
-                cartModal.style.display = 'none';
-            }
-            if (e.target === directPurchaseModal) {
-                directPurchaseModal.style.display = 'none';
-            }
-            if (e.target === emailClientModal) {
-                emailClientModal.style.display = 'none';
+            if (e.target === whatsappModal) {
+                whatsappModal.style.display = 'none';
             }
         });
-
-        // Inicializar la página
-        updateCart();
     </script>
 </body>
 </html>
