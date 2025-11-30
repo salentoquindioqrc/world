@@ -618,16 +618,11 @@
                     </ul>
                 </div>
                 
-                <!-- Videos de TikTok y YouTube -->
+                <!-- Videos de YouTube -->
                 <div class="video-container">
                     <div class="video-title">Video demostrativo en YouTube Shorts:</div>
                     <div class="video-wrapper shorts">
                         <iframe src="https://www.youtube.com/embed/hL2-t5baPSg" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
-                    
-                    <div class="video-title">Review completo en TikTok:</div>
-                    <div class="video-wrapper shorts">
-                        <iframe src="https://www.tiktok.com/embed/v2/7547918238538075448" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     
                     <div class="video-title">Video tutorial completo:</div>
@@ -643,7 +638,7 @@
     <div class="whatsapp-modal" id="whatsappModal">
         <div class="whatsapp-content">
             <div class="whatsapp-header">
-                <h2>Comprar por WhatsApp</h2>
+                <h2>Compar Producto</h2>
                 <button class="close-whatsapp" id="closeWhatsapp">&times;</button>
             </div>
             
@@ -651,28 +646,41 @@
                 <!-- Información del producto se cargará dinámicamente -->
             </div>
             
-            <!-- Shipping Options -->
+            <!-- Método de Pago -->
             <div class="shipping-options">
-                <h3>Opciones de Envío</h3>
-                <div class="shipping-option" data-shipping="0">
-                    <input type="radio" id="whatsapp-shipping-priority" name="whatsapp-shipping" class="shipping-radio" checked>
+                <h3>Método de Pago</h3>
+                <div class="shipping-option selected" data-shipping="0">
+                    <input type="radio" id="whatsapp-payment-cash" name="whatsapp-payment" class="shipping-radio" checked>
                     <div class="shipping-info">
                         <span class="shipping-name">
-                            <i class="fas fa-shipping-fast"></i> Envío Prioritario
+                            Pago Contraentrega
                         </span>
-                        <span class="shipping-description">Tu pedido sale en menos de 24 horas hábiles</span>
+                        <span class="shipping-description">Paga cuando recibas tu pedido</span>
+                    </div>
+                </div>
+                <div class="shipping-option" data-shipping="0">
+                    <input type="radio" id="whatsapp-payment-advance" name="whatsapp-payment" class="shipping-radio">
+                    <div class="shipping-info">
+                        <span class="shipping-name">
+                            Pago Anticipado
+                        </span>
+                        <span class="shipping-description">Tarjetas, PSE, Bancolombia, Nequi, cuotas sin intereses, Lightning Network</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Opción de Envío -->
+            <div class="shipping-options">
+                <h3>Opción de Envío</h3>
+                <div class="shipping-option selected" data-shipping="0">
+                    <input type="radio" id="whatsapp-shipping-standard" name="whatsapp-shipping" class="shipping-radio" checked>
+                    <div class="shipping-info">
+                        <span class="shipping-name">
+                            QRContraentrega Logística
+                        </span>
+                        <span class="shipping-description">Tu pedido será enviado a tu dirección de manera inmediata. Envío gratis</span>
                     </div>
                     <span class="shipping-price shipping-free">Gratis</span>
-                </div>
-                <div class="shipping-option" data-shipping="6000">
-                    <input type="radio" id="whatsapp-shipping-standard" name="whatsapp-shipping" class="shipping-radio">
-                    <div class="shipping-info">
-                        <span class="shipping-name">
-                            <i class="fas fa-truck"></i> Envío Estándar
-                        </span>
-                        <span class="shipping-description">Entrega en 3-5 días hábiles</span>
-                    </div>
-                    <span class="shipping-price">$6.000,00</span>
                 </div>
             </div>
             
@@ -781,6 +789,9 @@
                 
                 // Cambiar la imagen principal
                 mainImage.src = thumbnail.getAttribute('data-image');
+                
+                // Actualizar la imagen del producto en el modal
+                currentProduct.image = thumbnail.getAttribute('data-image');
             });
         });
 
@@ -878,9 +889,11 @@
 
         // Abrir modal para compra por WhatsApp
         function openWhatsappPurchase(product) {
+            // Actualizar el título del producto en el modal
+            document.querySelector('.whatsapp-header h2').textContent = "Compar Producto";
+            
             // Mostrar información del producto en el modal
             whatsappProduct.innerHTML = `
-                <img src="${product.image}" alt="${product.title}">
                 <div class="whatsapp-info">
                     <h3>${product.title}</h3>
                     <p class="product-price">${formatPrice(product.price)}</p>
@@ -895,7 +908,8 @@
             sendWhatsappBtn.disabled = true;
             
             // Resetear opción de envío
-            document.getElementById('whatsapp-shipping-priority').checked = true;
+            document.getElementById('whatsapp-shipping-standard').checked = true;
+            document.getElementById('whatsapp-payment-cash').checked = true;
             selectedShipping = 0;
             updateShippingOptions();
             
@@ -943,6 +957,31 @@
                 whatsappModal.style.display = 'none';
             }
         });
+
+        // Función para actualizar el producto dinámicamente
+        function updateProduct(newTitle, newPrice, newImage) {
+            // Actualizar título
+            document.querySelector('.product-title').textContent = newTitle;
+            document.querySelector('.breadcrumb a:last-child').textContent = newTitle;
+            
+            // Actualizar precio
+            document.querySelector('.product-price').textContent = '$' + newPrice.toLocaleString();
+            
+            // Actualizar imagen principal
+            mainImage.src = newImage;
+            
+            // Actualizar primera miniatura
+            thumbnails[0].src = newImage;
+            thumbnails[0].setAttribute('data-image', newImage);
+            
+            // Actualizar producto actual
+            currentProduct.title = newTitle;
+            currentProduct.price = newPrice;
+            currentProduct.image = newImage;
+        }
+
+        // Ejemplo de cómo cambiar el producto
+        // updateProduct("Nuevo Producto", 189900, "https://ejemplo.com/nueva-imagen.jpg");
     </script>
 </body>
 </html>
