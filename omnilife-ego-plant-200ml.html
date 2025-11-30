@@ -649,7 +649,7 @@
             <!-- Método de Pago -->
             <div class="shipping-options">
                 <h3>Método de Pago</h3>
-                <div class="shipping-option selected" data-shipping="0">
+                <div class="shipping-option selected" data-payment="contraentrega">
                     <input type="radio" id="whatsapp-payment-cash" name="whatsapp-payment" class="shipping-radio" checked>
                     <div class="shipping-info">
                         <span class="shipping-name">
@@ -658,7 +658,7 @@
                         <span class="shipping-description">Paga cuando recibas tu pedido</span>
                     </div>
                 </div>
-                <div class="shipping-option" data-shipping="0">
+                <div class="shipping-option" data-payment="anticipado">
                     <input type="radio" id="whatsapp-payment-advance" name="whatsapp-payment" class="shipping-radio">
                     <div class="shipping-info">
                         <span class="shipping-name">
@@ -748,6 +748,7 @@
     <script>
         // Variables globales
         let selectedShipping = 0; // Costo de envío seleccionado
+        let selectedPayment = "contraentrega"; // Método de pago seleccionado
         
         // Elementos del DOM
         const whatsappModal = document.getElementById('whatsappModal');
@@ -802,7 +803,12 @@
                 const radio = option.querySelector('.shipping-radio');
                 if (radio.checked) {
                     option.classList.add('selected');
-                    selectedShipping = parseInt(option.getAttribute('data-shipping'));
+                    if (option.hasAttribute('data-shipping')) {
+                        selectedShipping = parseInt(option.getAttribute('data-shipping'));
+                    }
+                    if (option.hasAttribute('data-payment')) {
+                        selectedPayment = option.getAttribute('data-payment');
+                    }
                 }
             });
         }
@@ -839,28 +845,18 @@
             }, 3000);
         }
 
-        // Obtener información del remitente desde el footer
-        function getRemitenteInfo() {
-            const contactoSection = document.querySelector('.footer-section:nth-child(2)');
-            const telefono = contactoSection.querySelector('p:nth-child(2)').textContent.replace('+57 ', '');
-            const correo = contactoSection.querySelector('p:nth-child(3)').textContent;
-            const direccion = contactoSection.querySelector('p:nth-child(4)').textContent;
-            
-            return {
-                nombre: "@hermanosdreams",
-                correo: correo,
-                direccion: direccion,
-                telefono: telefono
-            };
-        }
-
         // Generar mensaje de WhatsApp para compra
         function generateWhatsAppMessage() {
-            const remitente = getRemitenteInfo();
-            
             let message = "¡Hola! Quiero comprar el siguiente producto:\n\n";
             
             message += `- ${currentProduct.title}: ${formatPrice(currentProduct.price)}\n`;
+            
+            // Añadir método de pago
+            if (selectedPayment === "contraentrega") {
+                message += `- Método de Pago: Pago Contraentrega\n`;
+            } else {
+                message += `- Método de Pago: Pago Anticipado\n`;
+            }
             
             // Añadir costo de envío
             if (selectedShipping > 0) {
@@ -876,13 +872,6 @@
             message += `Teléfono: ${whatsappCustomerPhone.value}\n`;
             message += `Dirección: ${whatsappCustomerAddress.value}\n`;
             message += `Ciudad: ${whatsappCustomerCity.value}`;
-            
-            // Añadir información del remitente
-            message += `\n\nInformación del remitente:\n`;
-            message += `Negocio: ${remitente.nombre}\n`;
-            message += `Correo: ${remitente.correo}\n`;
-            message += `Dirección: ${remitente.direccion}\n`;
-            message += `Teléfono: ${remitente.telefono}`;
             
             return encodeURIComponent(message);
         }
@@ -907,10 +896,11 @@
             whatsappCustomerCity.value = '';
             sendWhatsappBtn.disabled = true;
             
-            // Resetear opción de envío
+            // Resetear opciones
             document.getElementById('whatsapp-shipping-standard').checked = true;
             document.getElementById('whatsapp-payment-cash').checked = true;
             selectedShipping = 0;
+            selectedPayment = "contraentrega";
             updateShippingOptions();
             
             // Mostrar modal
