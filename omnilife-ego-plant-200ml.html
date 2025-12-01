@@ -581,7 +581,7 @@
         <div class="product-detail">
             <div class="product-gallery">
                 <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
-                     alt="Auriculares Inalámbricos Premium" class="mainImage" id="mainImage">
+                     alt="Auriculares Inalámbricos Premium" class="main-image" id="mainImage">
                 <div class="thumbnail-container">
                     <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" 
                          alt="Auriculares Inalámbricos Premium - Vista 1" class="thumbnail active" data-image="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80">
@@ -594,7 +594,7 @@
             
             <div class="product-info">
                 <h1 class="product-title" id="productTitle">Auriculares Inalámbricos Premium</h1>
-                <p class="product-price" id="productPrice">$249.900</p>
+                <p class="product-price">$249.900</p>
                 
                 <!-- Botón de WhatsApp -->
                 <button class="whatsapp-buy-button" id="whatsappBuyButton">
@@ -762,25 +762,15 @@
         const cancelWhatsapp = document.getElementById('cancelWhatsapp');
         const whatsappBuyButton = document.getElementById('whatsappBuyButton');
         const productTitle = document.getElementById('productTitle');
-        const productPrice = document.getElementById('productPrice');
-        const mainImage = document.getElementById('mainImage');
         
-        // Función para obtener el título actual del producto
-        function getCurrentProductTitle() {
-            return productTitle.textContent;
-        }
-        
-        // Función para obtener el precio actual del producto
-        function getCurrentProductPrice() {
-            // Extraer el precio numérico del texto (eliminando el símbolo $ y los puntos)
-            const priceText = productPrice.textContent.replace('$', '').replace(/\./g, '');
-            return parseInt(priceText);
-        }
-        
-        // Función para obtener la imagen actual del producto
-        function getCurrentProductImage() {
-            return mainImage.src;
-        }
+        // Información del producto actual
+        const currentProduct = {
+            id: 1,
+            title: "Auriculares Inalámbricos Premium",
+            price: 249900,
+            description: "Auriculares con cancelación de ruido activa y 30h de batería",
+            image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80"
+        };
 
         // Función para formatear precios en formato COP
         function formatPrice(price) {
@@ -789,6 +779,7 @@
 
         // Funcionalidad para cambiar imágenes al hacer clic en miniaturas
         const thumbnails = document.querySelectorAll('.thumbnail');
+        const mainImage = document.getElementById('mainImage');
         
         thumbnails.forEach(thumbnail => {
             thumbnail.addEventListener('click', () => {
@@ -800,6 +791,9 @@
                 
                 // Cambiar la imagen principal
                 mainImage.src = thumbnail.getAttribute('data-image');
+                
+                // Actualizar la imagen del producto en el modal
+                currentProduct.image = thumbnail.getAttribute('data-image');
             });
         });
 
@@ -854,13 +848,12 @@
 
         // Generar mensaje de WhatsApp para compra
         function generateWhatsAppMessage() {
-            // Obtener información actual del producto
-            const currentTitle = getCurrentProductTitle();
-            const currentPrice = getCurrentProductPrice();
+            // Obtener el título actual del producto
+            const currentTitle = productTitle.textContent;
             
             let message = "¡Hola! Quiero comprar el siguiente producto:\n\n";
             
-            message += `- ${currentTitle}: ${formatPrice(currentPrice)}\n`;
+            message += `- ${currentTitle}: ${formatPrice(currentProduct.price)}\n`;
             
             // Añadir método de pago
             if (selectedPayment === "contraentrega") {
@@ -876,7 +869,7 @@
                 message += `- Envío: Gratis\n`;
             }
             
-            const total = currentPrice + selectedShipping;
+            const total = currentProduct.price + selectedShipping;
             message += `\nTotal: ${formatPrice(total)}`;
             message += `\n\nMi información de envío es:\n`;
             message += `Nombre: ${whatsappCustomerName.value}\n`;
@@ -889,9 +882,8 @@
 
         // Abrir modal para compra por WhatsApp
         function openWhatsappPurchase() {
-            // Obtener información actual del producto
-            const currentTitle = getCurrentProductTitle();
-            const currentPrice = getCurrentProductPrice();
+            // Obtener el título actual del producto
+            const currentTitle = productTitle.textContent;
             
             // Actualizar el título del producto en el modal
             document.querySelector('.whatsapp-header h2').textContent = "Compar Producto";
@@ -900,7 +892,7 @@
             whatsappProduct.innerHTML = `
                 <div class="whatsapp-info">
                     <h3>${currentTitle}</h3>
-                    <p class="product-price">${formatPrice(currentPrice)}</p>
+                    <p class="product-price">${formatPrice(currentProduct.price)}</p>
                 </div>
             `;
             
@@ -970,7 +962,7 @@
             document.querySelector('.breadcrumb a:last-child').textContent = newTitle;
             
             // Actualizar precio
-            productPrice.textContent = '$' + newPrice.toLocaleString();
+            document.querySelector('.product-price').textContent = '$' + newPrice.toLocaleString();
             
             // Actualizar imagen principal
             mainImage.src = newImage;
@@ -978,6 +970,11 @@
             // Actualizar primera miniatura
             thumbnails[0].src = newImage;
             thumbnails[0].setAttribute('data-image', newImage);
+            
+            // Actualizar producto actual
+            currentProduct.title = newTitle;
+            currentProduct.price = newPrice;
+            currentProduct.image = newImage;
         }
 
         // Ejemplo de cómo cambiar el producto
