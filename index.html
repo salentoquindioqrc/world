@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+enviame este codigo exacto que sea copiar pegar pero solo con los 10 primero productos para que no sea tan largo el codigo pero exacto , la unica mejora es que ahora al hacer clic en el titulo o imagen no va a redirigir a  ningun lugar simolemente no da clic ni el titulo ni la imagen <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -192,7 +192,6 @@
             object-fit: cover;
             border-bottom: 1px solid var(--color-gris-medio);
             transition: opacity 0.3s;
-            cursor: default;
         }
         
         .image-nav {
@@ -234,7 +233,6 @@
             margin-bottom: 0.5rem;
             font-weight: 700;
             min-height: 2.8rem;
-            cursor: default;
         }
         
         .product-price {
@@ -288,6 +286,17 @@
         
         .buy-now:hover {
             background-color: var(--color-negro);
+        }
+        
+        /* Enlaces de producto */
+        .product-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .product-link:hover .product-title {
+            text-decoration: underline;
         }
         
         /* Cart Modal */
@@ -974,8 +983,8 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>ENTREGA INMEDIATA + ENVÍO GRATIS</h1>
-        <p>SALENTO - QUINDÍO - COLOMBIA</p>
+        <h1>MARKETPLACE</h1>
+        <p>CALI, VALLE DEL CAUCA, COLOMBIA</p>
     </section>
         
     <!-- Main Content -->
@@ -1232,6 +1241,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 8192,
+                "productUrl": "https://ejemplo.com/productos/ego-plant-200ml",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1244,6 +1254,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 86240,
+                "productUrl": "https://ejemplo.com/productos/omnilife-f-plus",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1256,6 +1267,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 102112,
+                "productUrl": "https://ejemplo.com/productos/fiber-n-plus-supreme",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1268,6 +1280,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 160960,
+                "productUrl": "https://ejemplo.com/productos/estop-plus",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1280,6 +1293,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 86240,
+                "productUrl": "https://ejemplo.com/productos/homo-plus",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1292,6 +1306,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 8192,
+                "productUrl": "https://ejemplo.com/productos/omnilife-kolina",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1304,6 +1319,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 76832,
+                "productUrl": "https://ejemplo.com/productos/biocros-supreme",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1316,6 +1332,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 118112,
+                "productUrl": "https://ejemplo.com/productos/omniplus-frutas-evolucion",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1328,6 +1345,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 118112,
+                "productUrl": "https://ejemplo.com/productos/omniplus-naranja-supreme",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1340,6 +1358,7 @@
                 "category": "todo",
                 "supplier": "Omnilife Colombia",
                 "warehousePrice": 80480,
+                "productUrl": "https://ejemplo.com/productos/cognos-evolucion",
                 "images": [
                     "https://drive.google.com/thumbnail?id=1CRCYhdnU2ZC16ze2dPqoCPREq6Sh5VVD&sz=w1000"
                 ]
@@ -1399,11 +1418,15 @@
                 const productCard = document.createElement('div');
                 productCard.className = 'product-card';
                 productCard.innerHTML = `
-                    <div class="product-image-container">
-                        <img src="${product.images[0]}" alt="${product.title}" class="product-image" data-product-id="${product.id}" data-image-index="0">
-                    </div>
+                    <a href="${product.productUrl}" class="product-link" target="_blank">
+                        <div class="product-image-container">
+                            <img src="${product.images[0]}" alt="${product.title}" class="product-image" data-product-id="${product.id}" data-image-index="0">
+                        </div>
+                    </a>
                     <div class="product-info">
-                        <h3 class="product-title">${product.title}</h3>
+                        <a href="${product.productUrl}" class="product-link" target="_blank">
+                            <h3 class="product-title">${product.title}</h3>
+                        </a>
                         <p class="product-price">${formatPrice(product.price)}</p>
                         <p class="product-description">${product.description}</p>
                         <div class="product-actions">
