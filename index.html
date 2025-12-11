@@ -1,806 +1,977 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QRContraentrega Salento</title>
-  <style>
-    :root {
-      --primary-color: #1a1a1a;
-      --secondary-color: #333;
-      --accent-color: #0066cc;
-      --text-color: #333;
-      --light-text: #fff;
-      --bg-light: #f8f8f8;
-      --border-radius: 8px;
-      --box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      --transition: all 0.3s ease;
-    }
-    
-    * { 
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box; 
-    }
-    
-    body { 
-      font-family: 'Roboto', sans-serif; 
-      color: var(--text-color); 
-      line-height: 1.6; 
-      touch-action: manipulation;
-      overflow-x: hidden;
-    }
-    
-    #contenedor-mapa { 
-      height: 100vh; 
-      display: flex; 
-      flex-direction: column; 
-      position: relative;
-    }
-    
-    #barra-superior { 
-      display: flex; 
-      gap: 0.8rem; 
-      padding: 0.8rem; 
-      background: var(--bg-light); 
-      width: 100%;
-      z-index: 1000;
-    }
-    
-    #buscador { 
-      flex: 1; 
-      padding: 0.6rem 1.2rem; 
-      border: 1px solid #ddd; 
-      border-radius: 24px; 
-      appearance: none; 
-      font-size: 16px;
-      transition: var(--transition);
-    }
-    
-    #buscador:focus {
-      outline: none;
-      border-color: var(--accent-color);
-      box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
-    }
-    
-    .btn { 
-      background: var(--primary-color); 
-      color: var(--light-text); 
-      padding: 0.6rem 1.2rem; 
-      border-radius: 24px; 
-      text-decoration: none;
-      font-weight: 500;
-      transition: var(--transition);
-      border: none;
-      cursor: pointer;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-    
-    .btn:hover {
-      background: var(--secondary-color);
-      transform: translateY(-1px);
-    }
-    
-    .btn-centrar {
-      background-color: #0066cc;
-    }
-    
-    .btn-afiliar {
-      background-color: #27ae60;
-    }
-    
-    .btn-ruta {
-      background-color: #9b59b6;
-    }
-    
-    .btn-info {
-      background-color: #3498db;
-    }
-    
-    .btn-whatsapp {
-      background-color: #25D366;
-    }
-    
-    .btn-solicitar {
-      background-color: #e74c3c;
-    }
-    
-    #mapa { 
-      flex: 1; 
-      background: #f0f0f0; 
-      width: 100%;
-    }
-    
-    .cluster-marcadores { 
-      background: rgba(40,40,40,0.7); 
-      border-radius: 50%; 
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-    }
-    
-    .whatsapp-icon {
-      width: 16px;
-      height: 16px;
-      filter: invert(1);
-    }
-
-    .popup-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-top: 10px;
-    }
-
-    .popup-button-row {
-      display: flex;
-      gap: 8px;
-      justify-content: space-between;
-    }
-
-    .sugerencias-busqueda {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
-      border-radius: 0 0 8px 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      z-index: 1000;
-      max-height: 200px;
-      overflow-y: auto;
-      display: none;
-    }
-
-    .sugerencia-item {
-      padding: 10px 15px;
-      cursor: pointer;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .sugerencia-item:hover {
-      background-color: #f5f5f5;
-    }
-
-    .sugerencia-texto {
-      flex: 1;
-    }
-
-    .sugerencia-boton {
-      margin-left: 10px;
-      padding: 5px 10px;
-      background-color: #9b59b6;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 12px;
-    }
-
-    .contenedor-buscador {
-      position: relative;
-      flex: 1;
-    }
-
-    .cargando {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 1s ease-in-out infinite;
-    }
-
-    .gm-style .gm-style-iw-c {
-      border-radius: 8px;
-      padding: 10px;
-    }
-
-    .gm-style .gm-style-iw-d {
-      overflow: auto !important;
-    }
-
-    .gm-ui-hover-effect {
-      top: 8px !important;
-      right: 8px !important;
-    }
-
-    .map-type-selector {
-      position: absolute;
-      bottom: 20px;
-      left: 10px;
-      z-index: 1000;
-      background: white;
-      padding: 8px 12px;
-      border-radius: 4px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      display: flex;
-      gap: 10px;
-    }
-
-    .map-type-btn {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      background: #f1f1f1;
-      transition: background 0.3s;
-    }
-
-    .map-type-btn.active {
-      background: #0066cc;
-      color: white;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    @media (max-width: 768px) { 
-      #barra-superior { 
-        flex-direction: column; 
-        gap: 0.6rem;
-      }
-      
-      .popup-button-row {
-        flex-direction: column;
-      }
-
-      .sugerencia-item {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .sugerencia-boton {
-        margin-left: 0;
-        margin-top: 5px;
-        align-self: flex-end;
-      }
-
-      .map-type-selector {
-        bottom: 10px;
-        left: 5px;
-        flex-direction: column;
-        gap: 5px;
-      }
-    }
-  </style>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.4.1/dist/MarkerCluster.Default.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Marketplace - Categorías | Contraentrega Cali, Valle Del Cauca, Colombia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --color-blanco: #ffffff;
+            --color-negro: #000000;
+            --color-gris-claro: #f5f5f5;
+            --color-gris-medio: #e0e0e0;
+            --color-gris-oscuro: #333333;
+            --color-verde: #25D366;
+            --color-azul: #007bff;
+            --color-rojo: #dc3545;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Libre Baskerville', serif;
+            background-color: var(--color-blanco);
+            color: var(--color-negro);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--color-negro);
+            color: var(--color-blanco);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            height: 40px;
+            width: auto;
+            max-width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-color: var(--color-gris-claro);
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-card {
+            border: 1px solid var(--color-gris-medio);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            background: var(--color-blanco);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-image-container {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .category-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
+        
+        .category-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+        }
+        
+        .category-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--color-blanco);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--color-negro);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .category-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .category-title {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+            color: var(--color-negro);
+        }
+        
+        .category-description {
+            color: var(--color-gris-oscuro);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            font-size: 0.95rem;
+        }
+        
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-gris-medio);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            display: block;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--color-negro);
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--color-gris-oscuro);
+        }
+        
+        .category-link {
+            display: block;
+            text-align: center;
+            background-color: var(--color-negro);
+            color: var(--color-blanco);
+            padding: 0.9rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+        
+        .category-link:hover {
+            background-color: var(--color-gris-oscuro);
+        }
+        
+        /* Featured Products in Category */
+        .featured-products {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-gris-medio);
+        }
+        
+        .featured-title {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: var(--color-gris-oscuro);
+            font-weight: 600;
+        }
+        
+        .products-scroll {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+        }
+        
+        .product-mini {
+            min-width: 120px;
+            flex-shrink: 0;
+        }
+        
+        .product-mini-image {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-mini-title {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+        
+        .product-mini-price {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-negro);
+        }
+        
+        /* Category Banner */
+        .category-banner {
+            background: linear-gradient(135deg, var(--color-negro) 0%, var(--color-gris-oscuro) 100%);
+            color: var(--color-blanco);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .banner-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .banner-description {
+            max-width: 800px;
+            margin: 0 auto 1.5rem;
+            opacity: 0.9;
+        }
+        
+        /* Search Box */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+        
+        .search-box {
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--color-gris-medio);
+            border-radius: 8px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--color-negro);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-gris-oscuro);
+        }
+        
+        /* Admin Access Section */
+        .admin-access {
+            margin: 3rem 0;
+            padding: 2rem;
+            background-color: var(--color-gris-claro);
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .admin-access h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .admin-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .admin-form input {
+            padding: 0.9rem;
+            border: 1px solid var(--color-gris-medio);
+            border-radius: 6px;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1rem;
+        }
+        
+        .admin-form button {
+            padding: 0.9rem;
+            background-color: var(--color-negro);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .admin-form button:hover {
+            background-color: var(--color-gris-oscuro);
+        }
+        
+        /* Supplier Table */
+        .supplier-table-container {
+            display: none;
+            margin: 2rem 0;
+            overflow-x: auto;
+            border: 1px solid var(--color-gris-medio);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .supplier-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        .supplier-table th,
+        .supplier-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--color-gris-medio);
+        }
+        
+        .supplier-table th {
+            background-color: var(--color-gris-claro);
+            font-weight: 700;
+        }
+        
+        .supplier-table tr:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--color-negro);
+            color: var(--color-blanco);
+            padding: 3rem 1rem;
+            margin-top: 4rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            margin-bottom: 0.8rem;
+            color: var(--color-gris-medio);
+            text-decoration: none;
+            display: block;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--color-blanco);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-icons a {
+            font-size: 1.5rem;
+            color: var(--color-gris-medio);
+            transition: color 0.3s;
+        }
+        
+        .social-icons a:hover {
+            color: var(--color-blanco);
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--color-gris-oscuro);
+            color: var(--color-gris-medio);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+            
+            .category-image-container {
+                height: 160px;
+            }
+            
+            .category-content {
+                padding: 1.2rem;
+            }
+            
+            .category-title {
+                font-size: 1.2rem;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .category-banner {
+                padding: 1.5rem;
+            }
+            
+            .banner-title {
+                font-size: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .header-container {
+                flex-direction: row;
+                gap: 1rem;
+            }
+            
+            .category-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .stat-item {
+                text-align: left;
+            }
+            
+            .products-scroll {
+                gap: 0.8rem;
+            }
+            
+            .product-mini {
+                min-width: 100px;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .category-card {
+            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .category-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-card:nth-child(6) { animation-delay: 0.6s; }
+        .category-card:nth-child(7) { animation-delay: 0.7s; }
+        .category-card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
 </head>
 <body>
-  <div id="contenedor-mapa">
-    <div id="barra-superior">
-      <div class="contenedor-buscador">
-        <input type="search" id="buscador" placeholder="Buscar socios en Salento Quindío…" enterkeyhint="search">
-        <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
-      </div>
-      <button class="btn btn-afiliar" id="afiliar-btn">AFILIARSE</button>
-      <button class="btn btn-centrar" id="centrar-btn">CENTRAR</button>
-    </div>
-    <div id="mapa"></div>
-    <div class="map-type-selector">
-      <button class="map-type-btn active" id="map-btn">Mapa</button>
-      <button class="map-type-btn" id="satellite-btn">Satélite</button>
-    </div>
-  </div>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <img src="https://qrcontraentrega.com/img/c.jpg" alt="Logo CaliValle" class="logo-img">
+            </a>
+        </div>
+    </header>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet.markercluster@1.4.1/dist/leaflet.markercluster.js"></script>
-  <script>
-    // Variables globales
-    let mapa;
-    let userMarker;
-    let marcadoresOriginales = [];
-    let destinoMarker = null;
-    let buscadorTimeout;
-    let googleMapsLayer;
-    let googleSatelliteLayer;
-    let currentLayer;
-
-    // Datos de ubicaciones en Salento Quindío (solo socios)
-    const UBICACIONES = [
-      { 
-        "id": "salento_central",
-        "nombre": "Punto de Entrega Salento Centro", 
-        "direccion": "Calle 5 #5-50, Salento, Quindío", 
-        "latlng": [4.6378, -75.5708], 
-        "url": "https://qrcontraentrega.com/salento",
-        "telefono": "+573001234567",
-        "horario": "Lun - Vie 8:00 AM a 6:00 PM, Sáb 8:00 AM a 12:00 PM",
-        "servicios": "Entrega contra reembolso, recogidas y distribución en Salento y pueblos cercanos",
-        "tipo": "socio",
-        "ciudad": "Salento"
-      },
-      { 
-        "id": "valle_cocora",
-        "nombre": "Valle del Cocora Logistics", 
-        "direccion": "Vía al Valle de Cocora, Salento, Quindío", 
-        "latlng": [4.6395, -75.4892], 
-        "url": "https://qrcontraentrega.com/cocora",
-        "telefono": "+573001234568",
-        "horario": "Todos los días 7:00 AM a 5:00 PM",
-        "servicios": "Servicio de entrega COD para turistas y locales en el Valle de Cocora",
-        "tipo": "socio",
-        "ciudad": "Salento"
-      },
-      { 
-        "id": "salento_mercado",
-        "nombre": "Mercado Artesanal Salento", 
-        "direccion": "Carrera 6 #4-10, Salento, Quindío", 
-        "latlng": [4.6382, -75.5715], 
-        "url": "https://qrcontraentrega.com/artesanal",
-        "telefono": "+573001234569",
-        "horario": "Mar - Dom 9:00 AM a 7:00 PM",
-        "servicios": "Pago contra entrega para productos artesanales y agrícolas locales",
-        "tipo": "socio",
-        "ciudad": "Salento"
-      }
-    ];
-
-    // Inicializar el mapa cuando el DOM esté listo
-    document.addEventListener('DOMContentLoaded', function() {
-      initializeMap();
-      
-      // Evento para el botón centrar
-      document.getElementById('centrar-btn').addEventListener('click', function() {
-        obtenerUbicacionUsuario();
-      });
-      
-      // Evento para el botón afiliarse
-      document.getElementById('afiliar-btn').addEventListener('click', function() {
-        window.open('https://qrcontraentrega.com/afiliacion', '_blank');
-      });
-      
-      // Eventos para cambiar tipo de mapa
-      document.getElementById('map-btn').addEventListener('click', function() {
-        switchToMapView();
-      });
-      
-      document.getElementById('satellite-btn').addEventListener('click', function() {
-        switchToSatelliteView();
-      });
-      
-      // Eventos para el buscador
-      const searchInput = document.getElementById('buscador');
-      searchInput.addEventListener('input', handleSearchInput);
-      searchInput.addEventListener('keydown', handleSearchKeydown);
-      
-      // Cerrar sugerencias al hacer clic fuera
-      document.addEventListener('click', function(e) {
-        if (!e.target.closest('.contenedor-buscador')) {
-          document.getElementById('sugerencias-busqueda').style.display = 'none';
-        }
-      });
-    });
-
-    function initializeMap() {
-      // Inicializar mapa centrado en Salento Quindío
-      mapa = L.map('mapa', {
-        center: [4.6378, -75.5708], // Coordenadas de Salento Quindío
-        zoom: 15,
-        zoomControl: false
-      });
-
-      // Añadir control de zoom
-      L.control.zoom({ position: 'bottomright' }).addTo(mapa);
-
-      // Crear capas de Google Maps
-      googleMapsLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
-      });
-
-      googleSatelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
-        maxZoom: 20,
-        subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
-        attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
-      });
-
-      // Inicialmente usar la vista de mapa
-      currentLayer = googleMapsLayer;
-      currentLayer.addTo(mapa);
-
-      // Asegurar que el mapa ocupe todo el espacio disponible
-      setTimeout(() => {
-        mapa.invalidateSize();
-      }, 0);
-
-      // Sistema de marcadores
-      const clusters = L.markerClusterGroup({
-        iconCreateFunction: cluster => L.divIcon({
-          html: `<div>${cluster.getChildCount()}</div>`,
-          className: 'cluster-marcadores',
-          iconSize: [40, 40]
-        }),
-        spiderfyOnMaxZoom: true,
-        showCoverageOnHover: false,
-        zoomToBoundsOnClick: true
-      });
-
-      // Crear marcadores (solo socios)
-      UBICACIONES.forEach(loc => {
-        const marcador = L.marker(loc.latlng, {
-          icon: L.icon({
-            iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-            iconSize: [32, 32],
-            className: 'marker-icon-orange'
-          })
-        }).bindPopup(`
-          <div style="min-width:220px">
-            <h3 style="margin:0 0 5px 0;color:var(--accent-color)">${loc.nombre}</h3>
-            <p style="margin:0 0 8px 0;font-size:0.9em">${loc.direccion}</p>
-            <p style="margin:0 0 5px 0;font-size:0.9em"><strong>Ciudad:</strong> ${loc.ciudad}</p>
-            ${loc.telefono ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>Teléfono:</strong> ${loc.telefono}</p>` : ''}
-            ${loc.horario ? `<p style="margin:0 0 5px 0;font-size:0.9em"><strong>Horario:</strong> ${loc.horario}</p>` : ''}
-            ${loc.servicios ? `<p style="margin:0 0 8px 0;font-size:0.9em"><strong>Servicios:</strong> ${loc.servicios}</p>` : ''}
-            <div class="popup-buttons">
-              <div class="popup-button-row">
-                <button class="btn btn-whatsapp" onclick="abrirWhatsApp('${loc.telefono}', '${loc.nombre}')">
-                  <img src="https://cdn-icons-png.flaticon.com/512/220/220236.png" class="whatsapp-icon" alt="WhatsApp">
-                  Chatear por WhatsApp
-                </button>
-              </div>
-              <div class="popup-button-row">
-                <button class="btn btn-ruta" onclick="abrirGoogleMapsConDireccion('${loc.latlng[0]}', '${loc.latlng[1]}', '${loc.nombre}')">Cómo llegar</button>
-                <button class="btn btn-info" onclick="window.open('${loc.url}', '_blank')">Más información</button>
-              </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>CATEGORÍAS DE PRODUCTOS</h1>
+        <p>CALI, VALLE DEL CAUCA, COLOMBIA</p>
+    </section>
+        
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Category Banner -->
+        <div class="category-banner">
+            <h2 class="banner-title">Explora Nuestras Categorías</h2>
+            <p class="banner-description">Descubre una amplia variedad de productos organizados por categorías. Encuentra exactamente lo que necesitas entre miles de opciones disponibles.</p>
+        </div>
+        
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" id="searchInput" placeholder="Buscar categorías...">
             </div>
-          </div>
-        `);
-        
-        // Guardar todos los datos de la ubicación en el marcador
-        marcador.datosUbicacion = loc;
-        marcador.datosBusqueda = `${loc.nombre} ${loc.direccion} ${loc.ciudad} ${loc.telefono || ''} ${loc.servicios || ''}`.toLowerCase();
-        marcadoresOriginales.push(marcador);
-      });
+        </div>
 
-      // Añadir marcadores al mapa
-      clusters.addLayers(marcadoresOriginales);
-      mapa.addLayer(clusters);
+        <!-- Categories Grid -->
+        <div class="categories-grid" id="categoriesGrid">
+            <!-- Las categorías se cargarán dinámicamente con JavaScript -->
+        </div>
 
-      // Ajustar vista a los marcadores
-      if(marcadoresOriginales.length > 0) {
-        mapa.fitBounds(clusters.getBounds().pad(0.3));
-      }
-
-      // Solicitar ubicación al cargar la página
-      obtenerUbicacionUsuario();
-    }
-
-    // Función para cambiar a vista de mapa
-    function switchToMapView() {
-      mapa.removeLayer(currentLayer);
-      currentLayer = googleMapsLayer;
-      currentLayer.addTo(mapa);
-      
-      document.getElementById('map-btn').classList.add('active');
-      document.getElementById('satellite-btn').classList.remove('active');
-    }
-
-    // Función para cambiar a vista de satélite
-    function switchToSatelliteView() {
-      mapa.removeLayer(currentLayer);
-      currentLayer = googleSatelliteLayer;
-      currentLayer.addTo(mapa);
-      
-      document.getElementById('satellite-btn').classList.add('active');
-      document.getElementById('map-btn').classList.remove('active');
-    }
-
-    // Función para abrir Google Maps con una dirección específica
-    function abrirGoogleMapsConDireccion(lat, lng, nombre) {
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving&dir_action=navigate`;
-      window.open(url, '_blank');
-    }
-
-    // Función para manejar la búsqueda
-    function handleSearchInput(e) {
-      clearTimeout(buscadorTimeout);
-      const termino = e.target.value.trim();
-      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
-      
-      if (termino.length < 3) {
-        sugerenciasContainer.style.display = 'none';
-        return;
-      }
-      
-      // Mostrar indicador de carga
-      sugerenciasContainer.innerHTML = '<div class="sugerencia-item">Buscando... <span class="cargando"></span></div>';
-      sugerenciasContainer.style.display = 'block';
-      
-      buscadorTimeout = setTimeout(() => {
-        buscarConGoogle(termino);
-      }, 500);
-    }
-
-    // Función para buscar usando Google Places API (simulación)
-    function buscarConGoogle(consulta) {
-      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
-      
-      // Primero buscar en puntos locales
-      const resultadosLocales = buscarEnPuntosLocales(consulta);
-      if (resultadosLocales) {
-        return;
-      }
-      
-      // Simular búsqueda en Google Places
-      setTimeout(() => {
-        // En una implementación real, aquí se conectaría con la API de Google Places
-        sugerenciasContainer.innerHTML = '';
-        
-        // Simular algunos resultados de búsqueda en Salento
-        const resultadosSimulados = [
-          {
-            name: "Mirador Salento",
-            lat: 4.6391,
-            lng: -75.5702,
-            formatted_address: "Calle del Mirador, Salento, Quindío"
-          },
-          {
-            name: "Plaza Principal de Salento",
-            lat: 4.6375,
-            lng: -75.5710,
-            formatted_address: "Carrera 6, Salento, Quindío"
-          },
-          {
-            name: "Terminal de Transportes",
-            lat: 4.6365,
-            lng: -75.5725,
-            formatted_address: "Calle 4, Salento, Quindío"
-          },
-          {
-            name: "Parque Nacional del Café",
-            lat: 4.5380,
-            lng: -75.7715,
-            formatted_address: "Km 6 Vía Montenegro-Pueblo Tapao, Quindío"
-          }
-        ];
-        
-        if (resultadosSimulados.length > 0) {
-          resultadosSimulados.forEach(lugar => {
-            const item = document.createElement('div');
-            item.className = 'sugerencia-item';
-            
-            const lat = lugar.lat;
-            const lng = lugar.lng;
-            const nombre = lugar.name;
-            
-            item.innerHTML = `
-              <div class="sugerencia-texto">
-                <strong>📍 ${nombre}</strong><br>
-                <small>${lugar.formatted_address}</small>
-              </div>
-              <button class="sugerencia-boton" data-lat="${lat}" data-lng="${lng}" data-nombre="${nombre}">
-                Cómo llegar
-              </button>
-            `;
-            
-            // Agregar evento al botón "Cómo llegar"
-            const boton = item.querySelector('.sugerencia-boton');
-            boton.addEventListener('click', function(e) {
-              e.stopPropagation();
-              const lat = parseFloat(this.getAttribute('data-lat'));
-              const lng = parseFloat(this.getAttribute('data-lng'));
-              const nombre = this.getAttribute('data-nombre');
-              
-              // Mover el mapa a la ubicación seleccionada
-              const latlng = [lat, lng];
-              mapa.setView(latlng, 17);
-              
-              // Crear o actualizar marcador de destino
-              if (destinoMarker) {
-                mapa.removeLayer(destinoMarker);
-              }
-              destinoMarker = L.marker(latlng, {
-                icon: L.icon({
-                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-                  iconSize: [32, 32],
-                  className: 'marker-icon-red'
-                })
-              }).addTo(mapa)
-                .bindPopup(`<strong>${nombre}</strong>`);
-              
-              destinoMarker.openPopup();
-              document.getElementById('buscador').value = nombre;
-              sugerenciasContainer.style.display = 'none';
-            });
-            
-            // Agregar evento al item completo
-            item.addEventListener('click', function() {
-              const lat = parseFloat(boton.getAttribute('data-lat'));
-              const lng = parseFloat(boton.getAttribute('data-lng'));
-              const nombre = boton.getAttribute('data-nombre');
-              
-              const latlng = [lat, lng];
-              mapa.setView(latlng, 17);
-              
-              if (destinoMarker) {
-                mapa.removeLayer(destinoMarker);
-              }
-              destinoMarker = L.marker(latlng, {
-                icon: L.icon({
-                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-                  iconSize: [32, 32],
-                  className: 'marker-icon-red'
-                })
-              }).addTo(mapa)
-                .bindPopup(`<strong>${nombre}</strong>`);
-              
-              destinoMarker.openPopup();
-              document.getElementById('buscador').value = nombre;
-              sugerenciasContainer.style.display = 'none';
-            });
-            
-            sugerenciasContainer.appendChild(item);
-          });
-          sugerenciasContainer.style.display = 'block';
-        } else {
-          sugerenciasContainer.innerHTML = '<div class="sugerencia-item">No se encontraron resultados para: ' + consulta + '</div>';
-          sugerenciasContainer.style.display = 'block';
-        }
-      }, 800);
-    }
-
-    // Función para buscar en los puntos locales
-    function buscarEnPuntosLocales(consulta) {
-      const sugerenciasContainer = document.getElementById('sugerencias-busqueda');
-      const termino = consulta.toLowerCase();
-      const resultados = marcadoresOriginales.filter(m => 
-        m.datosBusqueda.includes(termino)
-      );
-      
-      if (resultados.length > 0) {
-        sugerenciasContainer.innerHTML = '';
-        
-        resultados.forEach(marcador => {
-          const loc = marcador.datosUbicacion;
-          const item = document.createElement('div');
-          item.className = 'sugerencia-item';
-          item.innerHTML = `
-            <div class="sugerencia-texto">
-              <strong>📍 ${loc.nombre}</strong><br>
-              <small>${loc.direccion}</small><br>
-              <small><strong>Ciudad:</strong> ${loc.ciudad}</small>
+        <!-- Admin Access Section -->
+        <div class="admin-access">
+            <h2>Acceso para Afiliados</h2>
+            <div class="admin-form">
+                <input type="password" id="adminKey" placeholder="Ingresa tu clave de acceso">
+                <button id="adminAccessBtn">Acceder</button>
             </div>
-            <button class="sugerencia-boton" data-id="${loc.id}">
-              Cómo llegar
-            </button>
-          `;
-          
-          // Agregar evento al botón "Cómo llegar"
-          const boton = item.querySelector('.sugerencia-boton');
-          boton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            const id = this.getAttribute('data-id');
-            abrirGoogleMapsConDireccionUbicacion(id);
-            sugerenciasContainer.style.display = 'none';
-          });
-          
-          // Agregar evento al item completo
-          item.addEventListener('click', function() {
-            mapa.setView(marcador.getLatLng(), 17);
-            marcador.openPopup();
-            document.getElementById('buscador').value = loc.nombre;
-            sugerenciasContainer.style.display = 'none';
-          });
-          
-          sugerenciasContainer.appendChild(item);
-        });
-        sugerenciasContainer.style.display = 'block';
-        return true;
-      }
-      return false;
-    }
+        </div>
 
-    // Función para abrir Google Maps con una ubicación específica
-    function abrirGoogleMapsConDireccionUbicacion(idPunto) {
-      const punto = UBICACIONES.find(p => p.id === idPunto);
-      if (!punto) return;
-      
-      const url = `https://www.google.com/maps/dir/?api=1&destination=${punto.latlng[0]},${punto.latlng[1]}&travelmode=driving&dir_action=navigate`;
-      window.open(url, '_blank');
-    }
+        <!-- Supplier Table -->
+        <div class="supplier-table-container" id="supplierTableContainer">
+            <table class="supplier-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoría</th>
+                        <th>Productos Activos</th>
+                        <th>Proveedores</th>
+                        <th>Producto Destacado</th>
+                        <th>Precio Promedio</th>
+                    </tr>
+                </thead>
+                <tbody id="supplierTableBody">
+                    <!-- Los datos se cargarán dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-    // Función para manejar teclas en el buscador
-    function handleSearchKeydown(e) {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const termino = document.getElementById('buscador').value.trim();
-        if (termino) {
-          buscarConGoogle(termino);
-        }
-      }
-    }
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Acerca de Nosotros</h3>
+                <p>Somos Contraentrega. La revolución en logística y comercio electrónico de Colombia. Conectamos vendedores y compradores con una red de entrega confiable y el sistema de pago contraentrega más seguro.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <p><i class="fas fa-phone"></i> +57 3215343562</p>
+                <p><i class="fas fa-envelope"></i> calivalle@qrcontraentrega.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Carrera 16 # 9 - 44, Cali, Colombia</p>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/share/14T4jNLh1Dw/?mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
+                    <a href="https://instagram.com/calivalle_qrcontraentrega"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/573215343562"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Enlaces Rápidos</h3>
+                <a href="https://qrcontraentrega.com/afiliacion-colombia">Afiliarse</a>
+                <a href="https://qrcontraentrega.com/solicitar-envio-colombia">Logística</a>
+                <a href="https://qrcontraentrega.com/terminos-y-condiciones-colombia">Términos y Condiciones</a>
+                <a href="https://qrcontraentrega.com/calivalle-mapa">Mapa</a>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; Contraentrega. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
-    // Función para abrir WhatsApp
-    function abrirWhatsApp(telefono, nombre) {
-      const numeroLimpio = telefono.replace(/\D/g, '');
-      const mensaje = `Hola ${nombre}, estoy interesado en conocer más sobre sus servicios de entrega contra reembolso en Salento.`;
-      window.open(`https://wa.me/${numeroLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
-    }
-
-    // Función para obtener ubicación del usuario
-    function obtenerUbicacionUsuario() {
-      return new Promise((resolve, reject) => {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              
-              // Verificar si está en Salento o cercanías (aproximadamente)
-              const distanciaASalento = calcularDistancia(
-                latitude, longitude,
-                4.6378, -75.5708
-              );
-              
-              if (distanciaASalento > 50) {
-                alert('El servicio está disponible principalmente en Salento Quindío y sus alrededores');
-              }
-              
-              // Eliminar marcador anterior si existe
-              if (userMarker) {
-                mapa.removeLayer(userMarker);
-              }
-              
-              // Crear nuevo marcador de usuario (azul)
-              userMarker = L.marker([latitude, longitude], {
-                icon: L.icon({
-                  iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
-                  iconSize: [32, 32],
-                  className: 'marker-icon-blue'
-                })
-              }).addTo(mapa)
-                .bindPopup('¡Tu ubicación actual!');
-                
-              // Centrar mapa en la ubicación del usuario con zoom cercano
-              mapa.setView([latitude, longitude], 17);
-              resolve();
+    <script>
+        // Base de datos de categorías
+        const categories = [
+            {
+                "id": 1,
+                "title": "Hogar y Decoración",
+                "description": "Muebles, decoración, electrodomésticos, textiles y todo para tu hogar. Encuentra desde artículos de decoración hasta muebles de alta calidad.",
+                "image": "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-home",
+                "productsCount": 245,
+                "suppliersCount": 42,
+                "avgPrice": 185000,
+                "featuredProducts": [
+                    {"name": "Sofá Moderno", "price": 1250000, "image": "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Lámpara LED", "price": 89000, "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?ixlib=rb-4.0.3&auto=format&fit=crop&w-400&q=80"},
+                    {"name": "Set de Cocina", "price": 320000, "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
             },
-            (error) => {
-              console.log(`Error al obtener ubicación: ${error.message}`);
-              alert('No se pudo obtener tu ubicación. Asegúrate de haber permitido el acceso a la ubicación.');
-              reject();
+            {
+                "id": 2,
+                "title": "Inmuebles y Propiedades",
+                "description": "Compra, venta y arriendo de apartamentos, casas, lotes y locales comerciales. Encuentra la propiedad perfecta para ti.",
+                "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-building",
+                "productsCount": 189,
+                "suppliersCount": 28,
+                "avgPrice": 450000000,
+                "featuredProducts": [
+                    {"name": "Apartamento Norte", "price": 280000000, "image": "https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Casa Campestre", "price": 650000000, "image": "https://images.unsplash.com/photo-1570129477492-45c003edd2be?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Local Comercial", "price": 320000000, "image": "https://images.unsplash.com/photo-1487956382158-bb926046304a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
             },
-            { 
-              enableHighAccuracy: true,
-              timeout: 10000,
-              maximumAge: 60000
+            {
+                "id": 3,
+                "title": "Bisutería y Accesorios",
+                "description": "Joyas, accesorios, relojes y complementos de moda. Encuentra piezas únicas para cada ocasión.",
+                "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-gem",
+                "productsCount": 532,
+                "suppliersCount": 67,
+                "avgPrice": 45000,
+                "featuredProducts": [
+                    {"name": "Collar de Plata", "price": 85000, "image": "https://images.unsplash.com/photo-1594576722512-582d5577dc56?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Reloj Elegante", "price": 120000, "image": "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Anillos Pack", "price": 35000, "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
+            },
+            {
+                "id": 4,
+                "title": "Electrónica y Tecnología",
+                "description": "Celulares, computadores, tablets, audio, video y gadgets. Tecnología de última generación.",
+                "image": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-laptop",
+                "productsCount": 412,
+                "suppliersCount": 53,
+                "avgPrice": 850000,
+                "featuredProducts": [
+                    {"name": "Smartphone Android", "price": 950000, "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Laptop Gaming", "price": 3200000, "image": "https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Audífonos Bluetooth", "price": 89000, "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
+            },
+            {
+                "id": 5,
+                "title": "Moda y Vestuario",
+                "description": "Ropa para hombre, mujer y niños. Calzado, accesorios y complementos de las mejores marcas.",
+                "image": "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-tshirt",
+                "productsCount": 678,
+                "suppliersCount": 89,
+                "avgPrice": 75000,
+                "featuredProducts": [
+                    {"name": "Vestido Elegante", "price": 120000, "image": "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Zapatos Casuales", "price": 85000, "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Jeans Modernos", "price": 65000, "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
+            },
+            {
+                "id": 6,
+                "title": "Salud y Belleza",
+                "description": "Cosméticos, cuidado personal, productos naturales y suplementos. Todo para tu bienestar.",
+                "image": "https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-spa",
+                "productsCount": 324,
+                "suppliersCount": 45,
+                "avgPrice": 55000,
+                "featuredProducts": [
+                    {"name": "Kit Facial", "price": 75000, "image": "https://images.unsplash.com/photo-1556228578-9c360e1d8d34?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Aceites Esenciales", "price": 45000, "image": "https://images.unsplash.com/photo-1551113972-7c7a6c3d7b32?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Suplementos Naturales", "price": 65000, "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
+            },
+            {
+                "id": 7,
+                "title": "Deportes y Aire Libre",
+                "description": "Equipos deportivos, ropa deportiva, camping, ciclismo y actividades al aire libre.",
+                "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-biking",
+                "productsCount": 287,
+                "suppliersCount": 38,
+                "avgPrice": 125000,
+                "featuredProducts": [
+                    {"name": "Bicicleta MTB", "price": 850000, "image": "https://images.unsplash.com/photo-1532298229144-0ec0c57515c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Set Gimnasio", "price": 320000, "image": "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Tienda Camping", "price": 180000, "image": "https://images.unsplash.com/photo-1504851149312-7a075b496cc7?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
+            },
+            {
+                "id": 8,
+                "title": "Automotriz y Repuestos",
+                "description": "Repuestos, accesorios, llantas y todo para tu vehículo. Calidad garantizada.",
+                "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-car",
+                "productsCount": 198,
+                "suppliersCount": 32,
+                "avgPrice": 185000,
+                "featuredProducts": [
+                    {"name": "Juego Llantas", "price": 850000, "image": "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Kit Herramientas", "price": 125000, "image": "https://images.unsplash.com/photo-1584068628360-437f7e8c1c1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"},
+                    {"name": "Accesorios Interior", "price": 45000, "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"}
+                ]
             }
-          );
-        } else {
-          console.log("Tu navegador no soporta geolocalización.");
-          alert("Tu navegador no soporta geolocalización.");
-          reject();
-        }
-      });
-    }
+        ];
 
-    // Función para calcular distancia en km (fórmula Haversine)
-    function calcularDistancia(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-  </script>
+        // Función para formatear precios en formato COP
+        function formatPrice(price) {
+            if (price > 1000000) {
+                return 'COP $' + (price / 1000000).toFixed(1) + 'M';
+            } else if (price > 1000) {
+                return 'COP $' + Math.round(price / 1000) + 'K';
+            }
+            return 'COP $' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        // Variables globales
+        const ADMIN_KEY = "proveedor2024"; // Clave estática para acceso a información de proveedor
+        
+        const categoriesGrid = document.getElementById('categoriesGrid');
+        const searchInput = document.getElementById('searchInput');
+        const adminKeyInput = document.getElementById('adminKey');
+        const adminAccessBtn = document.getElementById('adminAccessBtn');
+        const supplierTableContainer = document.getElementById('supplierTableContainer');
+        const supplierTableBody = document.getElementById('supplierTableBody');
+
+        // Cargar categorías en la página
+        function loadCategories(categoriesToLoad) {
+            categoriesGrid.innerHTML = '';
+            
+            categoriesToLoad.forEach(category => {
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'category-card';
+                
+                // Generar HTML para productos destacados
+                let featuredProductsHTML = '';
+                if (category.featuredProducts && category.featuredProducts.length > 0) {
+                    featuredProductsHTML = `
+                        <div class="featured-products">
+                            <h4 class="featured-title">Productos Destacados</h4>
+                            <div class="products-scroll">
+                                ${category.featuredProducts.map(product => `
+                                    <div class="product-mini">
+                                        <img src="${product.image}" alt="${product.name}" class="product-mini-image">
+                                        <div class="product-mini-title">${product.name}</div>
+                                        <div class="product-mini-price">${formatPrice(product.price)}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                categoryCard.innerHTML = `
+                    <div class="category-image-container">
+                        <img src="${category.image}" alt="${category.title}" class="category-image">
+                        <div class="category-overlay"></div>
+                        <div class="category-icon">
+                            <i class="${category.icon}"></i>
+                        </div>
+                    </div>
+                    <div class="category-content">
+                        <h3 class="category-title">${category.title}</h3>
+                        <p class="category-description">${category.description}</p>
+                        
+                        <div class="category-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">${category.productsCount}</span>
+                                <span class="stat-label">Productos</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">${category.suppliersCount}</span>
+                                <span class="stat-label">Proveedores</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">${formatPrice(category.avgPrice)}</span>
+                                <span class="stat-label">Precio Promedio</span>
+                            </div>
+                        </div>
+                        
+                        ${featuredProductsHTML}
+                        
+                        <a href="https://wa.me/573215343562?text=Hola!%20Estoy%20interesado%20en%20la%20categor%C3%ADa%20${encodeURIComponent(category.title)}" 
+                           class="category-link" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Consultar Productos
+                        </a>
+                    </div>
+                `;
+                categoriesGrid.appendChild(categoryCard);
+            });
+        }
+
+        // Filtrar categorías
+        function filterCategories() {
+            const searchText = searchInput.value.toLowerCase();
+            
+            const filteredCategories = categories.filter(category => {
+                return category.title.toLowerCase().includes(searchText) || 
+                       category.description.toLowerCase().includes(searchText);
+            });
+            
+            loadCategories(filteredCategories);
+        }
+
+        // Mostrar notificación
+        function showNotification(message) {
+            // Eliminar notificación existente si hay una
+            const existingNotification = document.querySelector('.notification');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background-color: var(--color-negro);
+                color: var(--color-blanco);
+                padding: 12px 24px;
+                border-radius: 6px;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                animation: fadeInUp 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        document.body.removeChild(notification);
+                    }
+                }, 500);
+            }, 3000);
+        }
+
+        // Cargar tabla de información de categorías para proveedores
+        function loadSupplierTable() {
+            supplierTableBody.innerHTML = '';
+            
+            categories.forEach(category => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${category.id}</td>
+                    <td>${category.title}</td>
+                    <td>${category.productsCount}</td>
+                    <td>${category.suppliersCount}</td>
+                    <td>${category.featuredProducts[0]?.name || 'N/A'}</td>
+                    <td>${formatPrice(category.avgPrice)}</td>
+                `;
+                supplierTableBody.appendChild(row);
+            });
+            
+            supplierTableContainer.style.display = 'block';
+            showNotification('Tabla de información de categorías cargada');
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', filterCategories);
+
+        // Acceso de administrador
+        adminAccessBtn.addEventListener('click', () => {
+            if (adminKeyInput.value === ADMIN_KEY) {
+                loadSupplierTable();
+                showNotification('Acceso concedido. Información de categorías cargada.');
+            } else {
+                showNotification('Clave incorrecta. Intenta nuevamente.');
+            }
+        });
+
+        adminKeyInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                adminAccessBtn.click();
+            }
+        });
+
+        // Inicializar la página
+        loadCategories(categories);
+        
+        // Añadir estilos CSS para animaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .notification {
+                animation: fadeInUp 0.3s ease-out;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
