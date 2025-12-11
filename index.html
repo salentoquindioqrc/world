@@ -13,8 +13,6 @@
             --color-gris-claro: #f5f5f5;
             --color-gris-medio: #e0e0e0;
             --color-gris-oscuro: #333333;
-            --color-azul-mercado: #00a650;
-            --color-naranja: #ff6f00;
         }
         
         * {
@@ -64,13 +62,12 @@
             max-width: 100%;
         }
         
-        /* Hero Section - Estilo Mercado Libre */
+        /* Hero Section */
         .hero {
-            background-color: var(--color-azul-mercado);
+            background-color: var(--color-gris-claro);
             text-align: center;
             padding: 2rem 1rem;
             margin-bottom: 2rem;
-            color: white;
         }
         
         .hero h1 {
@@ -83,7 +80,6 @@
             font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto;
-            opacity: 0.9;
         }
         
         /* Main Content */
@@ -195,7 +191,7 @@
         }
         
         .category-title-link:hover .category-title {
-            color: var(--color-azul-mercado);
+            color: var(--color-negro);
             text-decoration: underline;
         }
         
@@ -228,7 +224,7 @@
         }
         
         .category-link:hover {
-            background-color: var(--color-azul-mercado);
+            background-color: var(--color-gris-oscuro);
         }
         
         /* Carousel Navigation */
@@ -257,7 +253,7 @@
         }
         
         .nav-btn:hover {
-            background-color: var(--color-azul-mercado);
+            background-color: var(--color-gris-oscuro);
             transform: scale(1.05);
         }
         
@@ -283,60 +279,6 @@
         
         .dot.active {
             background-color: var(--color-negro);
-        }
-        
-        /* Search Box */
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto 3rem;
-        }
-        
-        .search-box {
-            position: relative;
-        }
-        
-        .search-box input {
-            width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid var(--color-gris-medio);
-            border-radius: 8px;
-            font-family: 'Libre Baskerville', serif;
-            font-size: 1rem;
-            transition: border-color 0.3s;
-        }
-        
-        .search-box input:focus {
-            outline: none;
-            border-color: var(--color-azul-mercado);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--color-gris-oscuro);
-        }
-        
-        /* Category Banner */
-        .category-banner {
-            background: linear-gradient(135deg, var(--color-negro) 0%, var(--color-gris-oscuro) 100%);
-            color: var(--color-blanco);
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-        
-        .banner-title {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-        
-        .banner-description {
-            max-width: 800px;
-            margin: 0 auto 1.5rem;
-            opacity: 0.9;
         }
         
         /* Admin Access Section */
@@ -382,7 +324,7 @@
         }
         
         .admin-form button:hover {
-            background-color: var(--color-azul-mercado);
+            background-color: var(--color-gris-oscuro);
         }
         
         /* Footer */
@@ -484,14 +426,6 @@
                 font-size: 1rem;
             }
             
-            .category-banner {
-                padding: 1.5rem;
-            }
-            
-            .banner-title {
-                font-size: 1.5rem;
-            }
-            
             .nav-btn {
                 width: 45px;
                 height: 45px;
@@ -527,44 +461,6 @@
                 transform: none;
             }
         }
-        
-        /* Rating Section */
-        .rating-section {
-            text-align: center;
-            margin: 2rem 0 3rem;
-            padding: 1rem;
-        }
-        
-        .rating {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--color-gris-claro);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-        }
-        
-        .stars {
-            color: var(--color-naranja);
-            font-size: 1.2rem;
-        }
-        
-        .rating-text {
-            font-weight: 600;
-            color: var(--color-gris-oscuro);
-        }
-        
-        .free-shipping {
-            background: linear-gradient(135deg, var(--color-azul-mercado), #00cc6a);
-            color: white;
-            padding: 0.8rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 166, 80, 0.3);
-        }
     </style>
 </head>
 <body>
@@ -577,14 +473,11 @@
         </div>
     </header>
 
-    <!-- Rating & Free Shipping Banner -->
-    <div class="rating-section">
-        <div class="rating">
-            <span class="stars">★★★★★</span>
-            <span class="rating-text">4.5 ★ +17M opiniones</span>
-        </div>
-        <div class="free-shipping">¡Abre la app y obtén envío gratis en tu primera compra!</div>
-    </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>MARKETPLACE</h1>
+        <p>CALI, VALLE DEL CAUCA, COLOMBIA</p>
+    </section>
 
     <!-- Categories Carousel -->
     <div class="container">
@@ -651,7 +544,7 @@
     </footer>
 
     <script>
-        // Base de datos de categorías según la imagen
+        // Base de datos de categorías actualizada
         const categories = [
             {
                 "id": 1,
@@ -831,19 +724,19 @@
             },
             {
                 "id": 23,
-                "title": "Mercado Pago",
-                "description": "Pagos seguros y rápidos con Mercado Pago.",
-                "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-credit-card",
-                "categoryUrl": "https://ejemplo.com/categorias/mercado-pago"
+                "title": "Comidas y Bebidas",
+                "description": "Alimentos preparados, bebidas y restaurantes.",
+                "image": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-utensils",
+                "categoryUrl": "https://ejemplo.com/categorias/comidas-bebidas"
             },
             {
                 "id": 24,
-                "title": "Mercado Play",
-                "description": "Entretenimiento digital: juegos, música y videos.",
-                "image": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-gamepad",
-                "categoryUrl": "https://ejemplo.com/categorias/mercado-play"
+                "title": "Comidas y Bebidas",
+                "description": "Variedad de alimentos y bebidas para todos los gustos.",
+                "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-coffee",
+                "categoryUrl": "https://ejemplo.com/categorias/comidas-bebidas-2"
             }
         ];
 
