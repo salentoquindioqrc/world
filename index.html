@@ -13,9 +13,8 @@
             --color-gris-claro: #f5f5f5;
             --color-gris-medio: #e0e0e0;
             --color-gris-oscuro: #333333;
-            --color-verde: #25D366;
-            --color-azul: #007bff;
-            --color-rojo: #dc3545;
+            --color-azul-mercado: #00a650;
+            --color-naranja: #ff6f00;
         }
         
         * {
@@ -65,23 +64,26 @@
             max-width: 100%;
         }
         
-        /* Hero Section */
+        /* Hero Section - Estilo Mercado Libre */
         .hero {
-            background-color: var(--color-gris-claro);
+            background-color: var(--color-azul-mercado);
             text-align: center;
             padding: 2rem 1rem;
             margin-bottom: 2rem;
+            color: white;
         }
         
         .hero h1 {
             font-size: 2rem;
             margin-bottom: 1rem;
+            font-weight: 700;
         }
         
         .hero p {
             font-size: 1.1rem;
             max-width: 800px;
             margin: 0 auto;
+            opacity: 0.9;
         }
         
         /* Main Content */
@@ -104,14 +106,14 @@
             gap: 1.5rem;
             overflow-x: auto;
             scroll-behavior: smooth;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
             padding: 1rem 0.5rem 2rem;
             scroll-snap-type: x mandatory;
         }
         
         .categories-carousel::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
+            display: none;
         }
         
         .category-card {
@@ -136,6 +138,13 @@
             width: 100%;
             height: 180px;
             overflow: hidden;
+        }
+        
+        .category-image-link {
+            display: block;
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
         }
         
         .category-image {
@@ -178,12 +187,24 @@
             padding: 1.2rem;
         }
         
+        .category-title-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            margin-bottom: 0.8rem;
+        }
+        
+        .category-title-link:hover .category-title {
+            color: var(--color-azul-mercado);
+            text-decoration: underline;
+        }
+        
         .category-title {
             font-size: 1.3rem;
-            margin-bottom: 0.8rem;
             font-weight: 700;
             color: var(--color-negro);
             min-height: 3.5rem;
+            transition: color 0.3s;
         }
         
         .category-description {
@@ -191,33 +212,6 @@
             margin-bottom: 1.2rem;
             font-size: 0.9rem;
             line-height: 1.5;
-            min-height: 4rem;
-        }
-        
-        .category-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1.2rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--color-gris-medio);
-        }
-        
-        .stat-item {
-            text-align: center;
-            flex: 1;
-        }
-        
-        .stat-value {
-            display: block;
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--color-negro);
-        }
-        
-        .stat-label {
-            font-size: 0.8rem;
-            color: var(--color-gris-oscuro);
-            margin-top: 0.2rem;
         }
         
         .category-link {
@@ -234,7 +228,7 @@
         }
         
         .category-link:hover {
-            background-color: var(--color-gris-oscuro);
+            background-color: var(--color-azul-mercado);
         }
         
         /* Carousel Navigation */
@@ -263,7 +257,7 @@
         }
         
         .nav-btn:hover {
-            background-color: var(--color-gris-oscuro);
+            background-color: var(--color-azul-mercado);
             transform: scale(1.05);
         }
         
@@ -313,7 +307,7 @@
         
         .search-box input:focus {
             outline: none;
-            border-color: var(--color-negro);
+            border-color: var(--color-azul-mercado);
         }
         
         .search-icon {
@@ -388,39 +382,7 @@
         }
         
         .admin-form button:hover {
-            background-color: var(--color-gris-oscuro);
-        }
-        
-        /* Supplier Table */
-        .supplier-table-container {
-            display: none;
-            margin: 2rem 0;
-            overflow-x: auto;
-            border: 1px solid var(--color-gris-medio);
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .supplier-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-        
-        .supplier-table th,
-        .supplier-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--color-gris-medio);
-        }
-        
-        .supplier-table th {
-            background-color: var(--color-gris-claro);
-            font-weight: 700;
-        }
-        
-        .supplier-table tr:hover {
-            background-color: rgba(0, 0, 0, 0.02);
+            background-color: var(--color-azul-mercado);
         }
         
         /* Footer */
@@ -550,15 +512,6 @@
                 gap: 1rem;
             }
             
-            .category-stats {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            
-            .stat-item {
-                text-align: left;
-            }
-            
             .carousel-nav {
                 gap: 1rem;
             }
@@ -574,6 +527,44 @@
                 transform: none;
             }
         }
+        
+        /* Rating Section */
+        .rating-section {
+            text-align: center;
+            margin: 2rem 0 3rem;
+            padding: 1rem;
+        }
+        
+        .rating {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-gris-claro);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-bottom: 1rem;
+        }
+        
+        .stars {
+            color: var(--color-naranja);
+            font-size: 1.2rem;
+        }
+        
+        .rating-text {
+            font-weight: 600;
+            color: var(--color-gris-oscuro);
+        }
+        
+        .free-shipping {
+            background: linear-gradient(135deg, var(--color-azul-mercado), #00cc6a);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 166, 80, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -586,29 +577,17 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>CATEGORÍAS DE PRODUCTOS</h1>
-        <p>CALI, VALLE DEL CAUCA, COLOMBIA</p>
-    </section>
-        
-    <!-- Main Content -->
-    <div class="container">
-        <!-- Category Banner -->
-        <div class="category-banner">
-            <h2 class="banner-title">Explora Nuestras Categorías</h2>
-            <p class="banner-description">Desliza para ver todas las categorías disponibles. Haz clic en "Ver Categoría" para explorar los productos de cada categoría.</p>
+    <!-- Rating & Free Shipping Banner -->
+    <div class="rating-section">
+        <div class="rating">
+            <span class="stars">★★★★★</span>
+            <span class="rating-text">4.5 ★ +17M opiniones</span>
         </div>
-        
-        <!-- Search Box -->
-        <div class="search-container">
-            <div class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input type="text" id="searchInput" placeholder="Buscar categorías...">
-            </div>
-        </div>
+        <div class="free-shipping">¡Abre la app y obtén envío gratis en tu primera compra!</div>
+    </div>
 
-        <!-- Categories Carousel -->
+    <!-- Categories Carousel -->
+    <div class="container">
         <div class="categories-carousel-container">
             <div class="categories-carousel" id="categoriesCarousel">
                 <!-- Las categorías se cargarán dinámicamente con JavaScript -->
@@ -637,25 +616,6 @@
                 <input type="password" id="adminKey" placeholder="Ingresa tu clave de acceso">
                 <button id="adminAccessBtn">Acceder</button>
             </div>
-        </div>
-
-        <!-- Supplier Table -->
-        <div class="supplier-table-container" id="supplierTableContainer">
-            <table class="supplier-table">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Categoría</th>
-                        <th>Productos Activos</th>
-                        <th>Proveedores</th>
-                        <th>Precio Promedio</th>
-                        <th>URL de Categoría</th>
-                    </tr>
-                </thead>
-                <tbody id="supplierTableBody">
-                    <!-- Los datos se cargarán dinámicamente -->
-                </tbody>
-            </table>
         </div>
     </div>
 
@@ -691,143 +651,212 @@
     </footer>
 
     <script>
-        // Base de datos de categorías
+        // Base de datos de categorías según la imagen
         const categories = [
             {
                 "id": 1,
-                "title": "Hogar y Decoración",
-                "description": "Muebles, decoración, electrodomésticos, textiles y todo para tu hogar. Encuentra desde artículos de decoración hasta muebles de alta calidad.",
-                "image": "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-home",
-                "productsCount": 245,
-                "suppliersCount": 42,
-                "avgPrice": 185000,
-                "categoryUrl": "https://ejemplo.com/categorias/hogar-decoracion"
+                "title": "Accesorios Vehículos",
+                "description": "Todo tipo de accesorios para tu vehículo. Calidad garantizada.",
+                "image": "https://images.unsplash.com/photo-1494976388531-d1058494cdd8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-car",
+                "categoryUrl": "https://ejemplo.com/categorias/accesorios-vehiculos"
             },
             {
                 "id": 2,
-                "title": "Inmuebles y Propiedades",
-                "description": "Compra, venta y arriendo de apartamentos, casas, lotes y locales comerciales. Encuentra la propiedad perfecta para ti.",
-                "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-building",
-                "productsCount": 189,
-                "suppliersCount": 28,
-                "avgPrice": 450000000,
-                "categoryUrl": "https://ejemplo.com/categorias/inmuebles-propiedades"
+                "title": "Muebles y Decoración",
+                "description": "Muebles, decoración y artículos para el hogar. Estilo y comodidad.",
+                "image": "https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-couch",
+                "categoryUrl": "https://ejemplo.com/categorias/muebles-decoracion"
             },
             {
                 "id": 3,
-                "title": "Bisutería y Accesorios",
-                "description": "Joyas, accesorios, relojes y complementos de moda. Encuentra piezas únicas para cada ocasión.",
-                "image": "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-gem",
-                "productsCount": 532,
-                "suppliersCount": 67,
-                "avgPrice": 45000,
-                "categoryUrl": "https://ejemplo.com/categorias/bisuteria-accesorios"
+                "title": "Celulares y Teléfonos",
+                "description": "Los últimos modelos de celulares y smartphones. Tecnología avanzada.",
+                "image": "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-mobile-alt",
+                "categoryUrl": "https://ejemplo.com/categorias/celulares-telefonos"
             },
             {
                 "id": 4,
-                "title": "Electrónica y Tecnología",
-                "description": "Celulares, computadores, tablets, audio, video y gadgets. Tecnología de última generación.",
+                "title": "Computación",
+                "description": "Laptops, PCs, tablets y accesorios tecnológicos. Lo último en informática.",
                 "image": "https://images.unsplash.com/photo-1517077304055-6e89abbf09b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
                 "icon": "fas fa-laptop",
-                "productsCount": 412,
-                "suppliersCount": 53,
-                "avgPrice": 850000,
-                "categoryUrl": "https://ejemplo.com/categorias/electronica-tecnologia"
+                "categoryUrl": "https://ejemplo.com/categorias/computacion"
             },
             {
                 "id": 5,
-                "title": "Moda y Vestuario",
-                "description": "Ropa para hombre, mujer y niños. Calzado, accesorios y complementos de las mejores marcas.",
-                "image": "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-tshirt",
-                "productsCount": 678,
-                "suppliersCount": 89,
-                "avgPrice": 75000,
-                "categoryUrl": "https://ejemplo.com/categorias/moda-vestuario"
+                "title": "Belleza y Salud",
+                "description": "Productos de belleza, cuidado personal y salud. Tu bienestar es primero.",
+                "image": "https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-spa",
+                "categoryUrl": "https://ejemplo.com/categorias/belleza-salud"
             },
             {
                 "id": 6,
-                "title": "Salud y Belleza",
-                "description": "Cosméticos, cuidado personal, productos naturales y suplementos. Todo para tu bienestar.",
-                "image": "https://images.unsplash.com/photo-1541643600914-78b084683601?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-spa",
-                "productsCount": 324,
-                "suppliersCount": 45,
-                "avgPrice": 55000,
-                "categoryUrl": "https://ejemplo.com/categorias/salud-belleza"
+                "title": "Deportes y Fitness",
+                "description": "Equipos deportivos, ropa de entrenamiento y accesorios fitness.",
+                "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-dumbbell",
+                "categoryUrl": "https://ejemplo.com/categorias/deportes-fitness"
             },
             {
                 "id": 7,
-                "title": "Deportes y Aire Libre",
-                "description": "Equipos deportivos, ropa deportiva, camping, ciclismo y actividades al aire libre.",
-                "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-biking",
-                "productsCount": 287,
-                "suppliersCount": 38,
-                "avgPrice": 125000,
-                "categoryUrl": "https://ejemplo.com/categorias/deportes-aire-libre"
+                "title": "Supermercado",
+                "description": "Productos de despensa, alimentos y bebidas. Entrega inmediata.",
+                "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-shopping-cart",
+                "categoryUrl": "https://ejemplo.com/categorias/supermercado"
             },
             {
                 "id": 8,
-                "title": "Automotriz y Repuestos",
-                "description": "Repuestos, accesorios, llantas y todo para tu vehículo. Calidad garantizada.",
-                "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-car",
-                "productsCount": 198,
-                "suppliersCount": 32,
-                "avgPrice": 185000,
-                "categoryUrl": "https://ejemplo.com/categorias/automotriz-repuestos"
+                "title": "Moda",
+                "description": "Ropa, calzado y accesorios de moda para toda la familia.",
+                "image": "https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-tshirt",
+                "categoryUrl": "https://ejemplo.com/categorias/moda"
             },
             {
                 "id": 9,
-                "title": "Supermercado y Alimentos",
-                "description": "Productos de despensa, alimentos, bebidas y artículos para el hogar. Entrega inmediata.",
-                "image": "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-shopping-cart",
-                "productsCount": 845,
-                "suppliersCount": 95,
-                "avgPrice": 35000,
-                "categoryUrl": "https://ejemplo.com/categorias/supermercado-alimentos"
+                "title": "Farmacia",
+                "description": "Medicamentos y productos farmacéuticos. Salud al alcance de todos.",
+                "image": "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-pills",
+                "categoryUrl": "https://ejemplo.com/categorias/farmacia"
             },
             {
                 "id": 10,
-                "title": "Libros y Educación",
-                "description": "Libros, material educativo, cursos y recursos de aprendizaje. Amplía tu conocimiento.",
-                "image": "https://images.unsplash.com/photo-1524578271613-d550eacf6090?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
-                "icon": "fas fa-book",
-                "productsCount": 156,
-                "suppliersCount": 24,
-                "avgPrice": 65000,
-                "categoryUrl": "https://ejemplo.com/categorias/libros-educacion"
+                "title": "Electrodomésticos",
+                "description": "Electrodomésticos para tu hogar. Eficiencia y calidad.",
+                "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-blender",
+                "categoryUrl": "https://ejemplo.com/categorias/electrodomesticos"
+            },
+            {
+                "id": 11,
+                "title": "Audio y Video",
+                "description": "Equipos de sonido, televisores y sistemas de entretenimiento.",
+                "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-tv",
+                "categoryUrl": "https://ejemplo.com/categorias/audio-video"
+            },
+            {
+                "id": 12,
+                "title": "Moda y Accesorios",
+                "description": "Complementos y accesorios de moda para destacar.",
+                "image": "https://images.unsplash.com/photo-1539008835657-9e8e9680c956?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-gem",
+                "categoryUrl": "https://ejemplo.com/categorias/moda-accesorios"
+            },
+            {
+                "id": 13,
+                "title": "Construcción",
+                "description": "Materiales y herramientas para construcción y reformas.",
+                "image": "https://images.unsplash.com/photo-1503387769-00a112127ca0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-tools",
+                "categoryUrl": "https://ejemplo.com/categorias/construccion"
+            },
+            {
+                "id": 14,
+                "title": "Hogar",
+                "description": "Todo para el hogar: cocina, baño, organización y más.",
+                "image": "https://images.unsplash.com/photo-1484101403633-562f891dc89a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-home",
+                "categoryUrl": "https://ejemplo.com/categorias/hogar"
+            },
+            {
+                "id": 15,
+                "title": "Vehículos",
+                "description": "Compra y venta de vehículos nuevos y usados.",
+                "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-car-side",
+                "categoryUrl": "https://ejemplo.com/categorias/vehiculos"
+            },
+            {
+                "id": 16,
+                "title": "Inmuebles",
+                "description": "Propiedades, apartamentos, casas y locales comerciales.",
+                "image": "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-building",
+                "categoryUrl": "https://ejemplo.com/categorias/inmuebles"
+            },
+            {
+                "id": 17,
+                "title": "Ofertas",
+                "description": "Las mejores ofertas y promociones del momento.",
+                "image": "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-tag",
+                "categoryUrl": "https://ejemplo.com/categorias/ofertas"
+            },
+            {
+                "id": 18,
+                "title": "Más vendidos",
+                "description": "Los productos más populares y vendidos.",
+                "image": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-fire",
+                "categoryUrl": "https://ejemplo.com/categorias/mas-vendidos"
+            },
+            {
+                "id": 19,
+                "title": "Tiendas Oficiales",
+                "description": "Productos directamente de las marcas oficiales.",
+                "image": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-store",
+                "categoryUrl": "https://ejemplo.com/categorias/tiendas-oficiales"
+            },
+            {
+                "id": 20,
+                "title": "Internacional",
+                "description": "Productos importados de todo el mundo.",
+                "image": "https://images.unsplash.com/photo-1500835556837-99ac94a94552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-globe-americas",
+                "categoryUrl": "https://ejemplo.com/categorias/internacional"
+            },
+            {
+                "id": 21,
+                "title": "Productos sustentables",
+                "description": "Productos ecológicos y respetuosos con el medio ambiente.",
+                "image": "https://images.unsplash.com/photo-1466611653911-95081537e5b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-leaf",
+                "categoryUrl": "https://ejemplo.com/categorias/sustentables"
+            },
+            {
+                "id": 22,
+                "title": "Historial",
+                "description": "Tus productos vistos recientemente.",
+                "image": "https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-history",
+                "categoryUrl": "https://ejemplo.com/categorias/historial"
+            },
+            {
+                "id": 23,
+                "title": "Mercado Pago",
+                "description": "Pagos seguros y rápidos con Mercado Pago.",
+                "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-credit-card",
+                "categoryUrl": "https://ejemplo.com/categorias/mercado-pago"
+            },
+            {
+                "id": 24,
+                "title": "Mercado Play",
+                "description": "Entretenimiento digital: juegos, música y videos.",
+                "image": "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+                "icon": "fas fa-gamepad",
+                "categoryUrl": "https://ejemplo.com/categorias/mercado-play"
             }
         ];
-
-        // Función para formatear precios en formato COP
-        function formatPrice(price) {
-            if (price > 1000000) {
-                return 'COP $' + (price / 1000000).toFixed(1) + 'M';
-            } else if (price > 1000) {
-                return 'COP $' + Math.round(price / 1000) + 'K';
-            }
-            return 'COP $' + price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-        }
 
         // Variables globales
         const ADMIN_KEY = "proveedor2024";
         
         // Elementos del DOM
         const categoriesCarousel = document.getElementById('categoriesCarousel');
-        const searchInput = document.getElementById('searchInput');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         const carouselDots = document.getElementById('carouselDots');
         const adminKeyInput = document.getElementById('adminKey');
         const adminAccessBtn = document.getElementById('adminAccessBtn');
-        const supplierTableContainer = document.getElementById('supplierTableContainer');
-        const supplierTableBody = document.getElementById('supplierTableBody');
 
         // Variables del carrusel
         let currentIndex = 0;
@@ -854,30 +883,19 @@
                 
                 categoryCard.innerHTML = `
                     <div class="category-image-container">
-                        <img src="${category.image}" alt="${category.title}" class="category-image">
-                        <div class="category-overlay"></div>
-                        <div class="category-icon">
-                            <i class="${category.icon}"></i>
-                        </div>
+                        <a href="${category.categoryUrl}" class="category-image-link" target="_blank">
+                            <img src="${category.image}" alt="${category.title}" class="category-image">
+                            <div class="category-overlay"></div>
+                            <div class="category-icon">
+                                <i class="${category.icon}"></i>
+                            </div>
+                        </a>
                     </div>
                     <div class="category-content">
-                        <h3 class="category-title">${category.title}</h3>
+                        <a href="${category.categoryUrl}" class="category-title-link" target="_blank">
+                            <h3 class="category-title">${category.title}</h3>
+                        </a>
                         <p class="category-description">${category.description}</p>
-                        
-                        <div class="category-stats">
-                            <div class="stat-item">
-                                <span class="stat-value">${category.productsCount}</span>
-                                <span class="stat-label">Productos</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-value">${category.suppliersCount}</span>
-                                <span class="stat-label">Proveedores</span>
-                            </div>
-                            <div class="stat-item">
-                                <span class="stat-value">${formatPrice(category.avgPrice)}</span>
-                                <span class="stat-label">Precio Promedio</span>
-                            </div>
-                        </div>
                         
                         <a href="${category.categoryUrl}" class="category-link" target="_blank">
                             <i class="fas fa-eye"></i> Ver Categoría
@@ -946,20 +964,6 @@
             }
         }
 
-        // Filtrar categorías
-        function filterCategories() {
-            const searchText = searchInput.value.toLowerCase();
-            
-            const filtered = categories.filter(category => {
-                return category.title.toLowerCase().includes(searchText) || 
-                       category.description.toLowerCase().includes(searchText);
-            });
-            
-            currentIndex = 0;
-            loadCategories(filtered);
-            scrollToIndex(0);
-        }
-
         // Mostrar notificación
         function showNotification(message) {
             const existingNotification = document.querySelector('.notification');
@@ -996,27 +1000,6 @@
             }, 3000);
         }
 
-        // Cargar tabla de información de categorías
-        function loadSupplierTable() {
-            supplierTableBody.innerHTML = '';
-            
-            categories.forEach(category => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${category.id}</td>
-                    <td>${category.title}</td>
-                    <td>${category.productsCount}</td>
-                    <td>${category.suppliersCount}</td>
-                    <td>${formatPrice(category.avgPrice)}</td>
-                    <td><a href="${category.categoryUrl}" target="_blank">${category.categoryUrl}</a></td>
-                `;
-                supplierTableBody.appendChild(row);
-            });
-            
-            supplierTableContainer.style.display = 'block';
-            showNotification('Tabla de información de categorías cargada');
-        }
-
         // Iniciar auto-scroll
         function startAutoScroll() {
             if (autoScrollInterval) clearInterval(autoScrollInterval);
@@ -1028,7 +1011,7 @@
                 } else {
                     scrollToIndex(0);
                 }
-            }, 5000); // Cambia cada 5 segundos
+            }, 5000);
         }
 
         // Detener auto-scroll
@@ -1040,8 +1023,6 @@
         }
 
         // Event Listeners
-        searchInput.addEventListener('input', filterCategories);
-
         prevBtn.addEventListener('click', () => {
             stopAutoScroll();
             prevSlide();
@@ -1057,8 +1038,7 @@
         // Acceso de administrador
         adminAccessBtn.addEventListener('click', () => {
             if (adminKeyInput.value === ADMIN_KEY) {
-                loadSupplierTable();
-                showNotification('Acceso concedido. Información de categorías cargada.');
+                showNotification('Acceso concedido como afiliado.');
             } else {
                 showNotification('Clave incorrecta. Intenta nuevamente.');
             }
