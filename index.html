@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR Cash on Delivery Salento Quindío</title>
+  <title>QRContraentrega Salento</title>
   <style>
     :root {
       --primary-color: #1a1a1a;
@@ -87,6 +87,10 @@
     
     .btn-centrar {
       background-color: #0066cc;
+    }
+    
+    .btn-afiliar {
+      background-color: #27ae60;
     }
     
     .btn-ruta {
@@ -283,6 +287,7 @@
         <input type="search" id="buscador" placeholder="Buscar socios en Salento Quindío…" enterkeyhint="search">
         <div id="sugerencias-busqueda" class="sugerencias-busqueda"></div>
       </div>
+      <button class="btn btn-afiliar" id="afiliar-btn">AFILIARSE</button>
       <button class="btn btn-centrar" id="centrar-btn">CENTRAR</button>
     </div>
     <div id="mapa"></div>
@@ -312,7 +317,7 @@
         "nombre": "Punto de Entrega Salento Centro", 
         "direccion": "Calle 5 #5-50, Salento, Quindío", 
         "latlng": [4.6378, -75.5708], 
-        "url": "https://qrcashondelivery.com/salento",
+        "url": "https://qrcontraentrega.com/salento",
         "telefono": "+573001234567",
         "horario": "Lun - Vie 8:00 AM a 6:00 PM, Sáb 8:00 AM a 12:00 PM",
         "servicios": "Entrega contra reembolso, recogidas y distribución en Salento y pueblos cercanos",
@@ -324,7 +329,7 @@
         "nombre": "Valle del Cocora Logistics", 
         "direccion": "Vía al Valle de Cocora, Salento, Quindío", 
         "latlng": [4.6395, -75.4892], 
-        "url": "https://qrcashondelivery.com/cocora",
+        "url": "https://qrcontraentrega.com/cocora",
         "telefono": "+573001234568",
         "horario": "Todos los días 7:00 AM a 5:00 PM",
         "servicios": "Servicio de entrega COD para turistas y locales en el Valle de Cocora",
@@ -336,7 +341,7 @@
         "nombre": "Mercado Artesanal Salento", 
         "direccion": "Carrera 6 #4-10, Salento, Quindío", 
         "latlng": [4.6382, -75.5715], 
-        "url": "https://qrcashondelivery.com/artesanal",
+        "url": "https://qrcontraentrega.com/artesanal",
         "telefono": "+573001234569",
         "horario": "Mar - Dom 9:00 AM a 7:00 PM",
         "servicios": "Pago contra entrega para productos artesanales y agrícolas locales",
@@ -349,9 +354,14 @@
     document.addEventListener('DOMContentLoaded', function() {
       initializeMap();
       
-      // Evento para el botón centrar - CORREGIDO
+      // Evento para el botón centrar
       document.getElementById('centrar-btn').addEventListener('click', function() {
         obtenerUbicacionUsuario();
+      });
+      
+      // Evento para el botón afiliarse
+      document.getElementById('afiliar-btn').addEventListener('click', function() {
+        window.open('https://qrcontraentrega.com/afiliacion', '_blank');
       });
       
       // Eventos para cambiar tipo de mapa
@@ -723,7 +733,7 @@
       window.open(`https://wa.me/${numeroLimpio}?text=${encodeURIComponent(mensaje)}`, '_blank');
     }
 
-    // Función para obtener ubicación del usuario - CORREGIDA
+    // Función para obtener ubicación del usuario
     function obtenerUbicacionUsuario() {
       return new Promise((resolve, reject) => {
         if (navigator.geolocation) {
